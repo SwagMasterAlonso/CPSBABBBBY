@@ -12,7 +12,7 @@ public class Main {
 		int weight = 0;
 		int counter = 0;
 		//get command line arguments, there should only be 2
-		if(args.length==2){
+		if(args.length==1){
 			String inputString = args[0];
 
 			fileName = inputString;
@@ -29,26 +29,74 @@ public class Main {
 				switch(counter) {
 					case 0:
 						if (line.contains("#####") && line.contains("variables")) {
+							System.out.println("Beginning header");
 							break;
 						} else if (line.contains("#####") && line.contains("values")) {
+							System.out.println("exiting section "+line);
 							counter++;
 							break;
 						} else {
 							String[] fields = line.split(" ");
 							item = fields[0];
 							weight = Integer.parseInt(fields[1]);
+							System.out.println("item "+item+" weighs "+weight);
 							continue;
 						}
 					case 1:
-						if (line.contains("#####") && line.contains("values")) {
-							break;
-						} else if (line.contains("#####") && line.contains("fitting limits")) {
+						if (line.contains("#####") && line.contains("fitting limits")) {
+							System.out.println("exiting section "+line);
 							counter++;
 							break;
 						} else {
 							String[] fields = line.split(" ");
 							bag = fields[0];
 							weight = Integer.parseInt(fields[1]);
+							System.out.println("bag "+bag+" can hold "+weight);
+							continue;
+						}
+					case 2:
+						if (line.contains("#####") && line.contains("unary inclusive")) {
+							System.out.println("exiting section "+line);
+							counter++;
+							break;
+						} else {
+							System.out.println("Reading unary inclusive info.");
+							continue;
+						}
+					case 3:
+						if (line.contains("#####") && line.contains("unary exclusive")) {
+							System.out.println("exiting section "+line);
+							counter++;
+							break;
+						} else {
+							System.out.println("Reading unary exclusive info.");
+							continue;
+						}
+					case 4:
+						if (line.contains("#####") && line.contains("binary equals")) {
+							System.out.println("exiting section "+line);
+							counter++;
+							break;
+						} else {
+							System.out.println("Reading binary equals info.");
+							continue;
+						}
+					case 5:
+						if (line.contains("#####") && line.contains("binary not")) {
+							System.out.println("exiting section "+line);
+							counter++;
+							break;
+						} else {
+							System.out.println("Reading binary not equals info.");
+							continue;
+						}
+					case 6:
+						if (line.contains("#####") && line.contains("binary simultaneous")) {
+							System.out.println("exiting section "+line);
+							counter++;
+							break;
+						} else {
+							System.out.println("Reading binary simultaneous info.");
 							continue;
 						}
 				}
