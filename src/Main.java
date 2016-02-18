@@ -107,6 +107,9 @@ public class Main {
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
+						for (Item i: listOfItems) {
+							i.setDomain(listOfBags);
+						}
 						System.out.println("entering section "+line);
 						counter++;
 						break;
