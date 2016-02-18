@@ -84,7 +84,7 @@ public class Main {
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
-						
+
 						System.out.println("entering section "+line);
 						counter++;
 						break;
