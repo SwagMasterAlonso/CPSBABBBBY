@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,29 +35,7 @@ public class Main {
 		parseData(fileName);
 
 
-
-
-
-
-
-
-
-
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -107,9 +84,7 @@ public class Main {
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
-						for (Item i: listOfItems) {
-							i.setDomain(listOfBags);
-						}
+						
 						System.out.println("entering section "+line);
 						counter++;
 						break;
@@ -207,4 +182,47 @@ public class Main {
 		}
 	}
 
+
+	static List<Bag> backTrack(List<Bag> bagList, List<Item> itemList){
+		
+		Item tempItem;
+		boolean isDone = false;
+		List<Bag> result = null;
+		if(itemList.isEmpty()){
+			for(Bag b:bagList){
+				if(b.fc.checkConstraint()){
+					isDone = true;
+				} else {
+					isDone = false;
+				}
+			}
+		}
+		
+		if(isDone){
+			return result;
+		}
+		
+		tempItem = itemList.remove(0);
+		
+		for(Bag c: bagList){
+			if(c.fc.checkConstraint()){
+				c.getListOfItems().add(tempItem);
+			
+			
+				
+				result = backTrack(bagList,itemList);
+				
+				
+			
+			
+			
+			}
+		}
+		
+		
+		
+		
+		
+		
+	}
 }

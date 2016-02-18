@@ -14,6 +14,8 @@ public class Bag {
 	FittingConstraint fc;
 
 
+	
+
 	public Bag(String nameOfBag, int weightOfBag){
 		this.name = nameOfBag;
 		this.weight = weightOfBag;
@@ -39,6 +41,14 @@ public class Bag {
 	}
 	public int getMax() {
 		return this.fittingMax;
+	}
+	
+	public List<Item> getListOfItems() {
+		return listOfItems;
+	}
+
+	public void setListOfItems(List<Item> listOfItems) {
+		this.listOfItems = listOfItems;
 	}
 
 }
