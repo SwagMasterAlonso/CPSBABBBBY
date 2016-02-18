@@ -3,10 +3,19 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
 	public static void main(String[] args) {
+
+		
+		List<Bag> listOfBags = new ArrayList<Bag>();
+
+		List<Item> listOfItems = new ArrayList<Item>();
+
+		
 		String fileName = null, line;
 		String item, bag;
 		int weight = 0;
@@ -39,6 +48,8 @@ public class Main {
 							String[] fields = line.split(" ");
 							item = fields[0];
 							weight = Integer.parseInt(fields[1]);
+							Item itemObject = new Item(item,weight);
+							listOfItems.add(itemObject);
 							System.out.println("item "+item+" weighs "+weight);
 							continue;
 						}
@@ -51,6 +62,8 @@ public class Main {
 							String[] fields = line.split(" ");
 							bag = fields[0];
 							weight = Integer.parseInt(fields[1]);
+							Bag bagObject = new Bag(bag,weight);
+							listOfBags.add(bagObject);
 							System.out.println("bag "+bag+" can hold "+weight);
 							continue;
 						}
@@ -111,6 +124,19 @@ public class Main {
 				} catch (IOException e) {e.printStackTrace();}
 			}
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 }

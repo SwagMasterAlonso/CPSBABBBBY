@@ -10,13 +10,12 @@ public class Bag {
 	String name;
 	int weight;
 	List<Item> listOfItems = new ArrayList<Item>();
-
 	
 	
-	public Bag(String nameOfBag, int weightOfBag,List<Item> itemList){
-		this.name = name;
+	public Bag(String nameOfBag, int weightOfBag){
+		this.name = nameOfBag;
 		this.weight = weightOfBag;
-		this.listOfItems = itemList;
+		//this.listOfItems = itemList;
 		
 	}
 			
