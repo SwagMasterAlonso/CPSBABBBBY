@@ -9,7 +9,6 @@ public class Item {
 	String name;
 
 	int weight;
-	List<Bag> domain;
 
 	public Item(String nameItem, int weightItem){
 		this.name = nameItem;
@@ -19,7 +18,22 @@ public class Item {
 	public String toString(){
 		return this.name;
 	}
-	public void setDomain (List<Bag> bags) {
-		this.domain = bags;
+
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 }
