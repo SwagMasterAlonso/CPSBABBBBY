@@ -16,4 +16,8 @@ public class Item {
 		this.name = nameItem;
 		this.weight = weightItem;
 	}
+	
+	public String toString(){
+		return this.name;
+	}
 }

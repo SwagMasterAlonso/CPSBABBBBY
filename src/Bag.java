@@ -18,5 +18,9 @@ public class Bag {
 		//this.listOfItems = itemList;
 		
 	}
+	
+	public String toString(){
+		return this.name;
+	}
 			
 }
