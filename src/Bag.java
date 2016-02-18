@@ -11,12 +11,16 @@ public class Bag {
 	int weight;
 	List<Item> listOfItems = new ArrayList<Item>();
 	int fittingMin, fittingMax;
+	FittingConstraint fc;
 
 
 	public Bag(String nameOfBag, int weightOfBag){
 		this.name = nameOfBag;
 		this.weight = weightOfBag;
 		//this.listOfItems = itemList;
+		this.fittingMin = 0;
+		this.fittingMax = 1000;
+		this.fc = new FittingConstraint(this);
 	}
 
 	public String toString(){
