@@ -93,7 +93,7 @@ public class Main {
 						System.out.println("Beginning header");
 						break;
 					} else if (line.contains("#####") && line.contains("values")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -107,7 +107,7 @@ public class Main {
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -124,17 +124,26 @@ public class Main {
 				case 2:
 					if (line.contains("#####") && line.contains("unary inclusive")) {
 
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
 						System.out.println("Reading fitting limits info.");
-						System.out.println("Cheeseburger");
+						String[] fields = line.split(" ");
+						int min = Integer.parseInt(fields[0]);
+						int max = Integer.parseInt(fields[1]);
+						for (Bag b: listOfBags) {
+							b.setMin(min);
+							b.setMax(max);
+						}
+						for (Bag b: listOfBags) {
+							System.out.println(b);
+						}
 						continue;
 					}
 				case 3:
 					if (line.contains("#####") && line.contains("unary exclusive")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -143,7 +152,7 @@ public class Main {
 					}
 				case 4:
 					if (line.contains("#####") && line.contains("binary equals")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -152,7 +161,7 @@ public class Main {
 					}
 				case 5:
 					if (line.contains("#####") && line.contains("binary not")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -165,7 +174,7 @@ public class Main {
 					}
 				case 6:
 					if (line.contains("#####") && line.contains("binary simultaneous")) {
-						System.out.println("exiting section "+line);
+						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
