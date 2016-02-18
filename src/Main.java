@@ -111,6 +111,8 @@ public class Main {
 						counter++;
 						break;
 					} else {
+						System.out.println("Cheeseburger2");
+
 						String[] fields = line.split(" ");
 						bag = fields[0];
 						weight = Integer.parseInt(fields[1]);
@@ -121,11 +123,13 @@ public class Main {
 					}
 				case 2:
 					if (line.contains("#####") && line.contains("unary inclusive")) {
+
 						System.out.println("exiting section "+line);
 						counter++;
 						break;
 					} else {
 						System.out.println("Reading fitting limits info.");
+						System.out.println("Cheeseburger");
 						continue;
 					}
 				case 3:
