@@ -30,4 +30,11 @@ public class Bag {
 		this.fittingMax = fitMax;
 	}
 
+	public int getMin() {
+		return this.fittingMin;
+	}
+	public int getMax() {
+		return this.fittingMax;
+	}
+
 }
