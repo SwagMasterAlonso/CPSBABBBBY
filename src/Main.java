@@ -20,6 +20,7 @@ public class Main {
 		String item, bag;
 		int weight = 0;
 		int counter = 0;
+
 		//get command line arguments, there should only be 2
 		if(args.length==1){
 			String inputString = args[0];
@@ -73,7 +74,7 @@ public class Main {
 							counter++;
 							break;
 						} else {
-							System.out.println("Reading unary inclusive info.");
+							System.out.println("Reading fitting limits info.");
 							continue;
 						}
 					case 3:
@@ -82,7 +83,7 @@ public class Main {
 							counter++;
 							break;
 						} else {
-							System.out.println("Reading unary exclusive info.");
+							System.out.println("Reading unary inclusive info.");
 							continue;
 						}
 					case 4:
@@ -91,7 +92,7 @@ public class Main {
 							counter++;
 							break;
 						} else {
-							System.out.println("Reading binary equals info.");
+							System.out.println("Reading unary exclusive info.");
 							continue;
 						}
 					case 5:
@@ -100,7 +101,11 @@ public class Main {
 							counter++;
 							break;
 						} else {
-							System.out.println("Reading binary not equals info.");
+							System.out.println("Reading binary equals info.");
+							String[] fields = line.split(" ");
+							String item1 = fields[0];
+							String item2 = fields[1];
+							System.out.println("item "+item1+" must be with "+item2);
 							continue;
 						}
 					case 6:
@@ -109,9 +114,18 @@ public class Main {
 							counter++;
 							break;
 						} else {
-							System.out.println("Reading binary simultaneous info.");
+							System.out.println("Reading binary not equals info.");
+							String[] fields = line.split(" ");
+							String item1 = fields[0];
+							String item2 = fields[1];
+							System.out.println("item "+item1+" cannot be with "+item2);
 							continue;
 						}
+					case 7:
+						System.out.println("Reading binary simultaneous info.");
+						continue;
+					default:
+						System.out.println("Already reached end of file");
 				}
 			}
 		}
