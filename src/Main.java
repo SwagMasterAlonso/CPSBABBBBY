@@ -89,8 +89,6 @@ public class Main {
 						counter++;
 						break;
 					} else {
-						System.out.println("Cheeseburger2");
-
 						String[] fields = line.split(" ");
 						bag = fields[0];
 						weight = Integer.parseInt(fields[1]);
@@ -120,12 +118,24 @@ public class Main {
 						continue;
 					}
 				case 3:
+					UnaryInclusive uin;
 					if (line.contains("#####") && line.contains("unary exclusive")) {
 						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
 						System.out.println("Reading unary inclusive info.");
+						String[] fields = line.split(" ");
+						for (Item i: listOfItems) {
+							if (i.getName() == fields[0]) {
+								uin = new UnaryInclusive(i);
+								for (int k = 1; k< fields.length; k++) {
+									uin.addToDomain();
+								}
+							}
+							i.setuInclusive(uin);
+						}
+						System.out.println("Read in "+line);
 						continue;
 					}
 				case 4:
@@ -184,45 +194,42 @@ public class Main {
 
 
 	static List<Bag> backTrack(List<Bag> bagList, List<Item> itemList){
-		
+
 		Item tempItem;
 		boolean isDone = false;
 		List<Bag> result = null;
 		if(itemList.isEmpty()){
 			for(Bag b:bagList){
 				if(b.fc.checkConstraint()){
+
 					isDone = true;
 				} else {
 					isDone = false;
 				}
 			}
 		}
-		
+
 		if(isDone){
 			return result;
 		}
-		
+
 		tempItem = itemList.remove(0);
-		
+
 		for(Bag c: bagList){
 			if(c.fc.checkConstraint()){
 				c.getListOfItems().add(tempItem);
-			
-			
-				
+
+
+
 				result = backTrack(bagList,itemList);
-				
-				
-			
-			
-			
+
+
+
+
+
 			}
 		}
-		
-		
-		
-		
-		
-		
+
+
 	}
 }
