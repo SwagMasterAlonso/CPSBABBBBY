@@ -232,4 +232,15 @@ public class Main {
 
 
 	}
+	
+	public int getBagIndex(String character){
+
+		for(int i = 0; i <listOfBags.size();i++){
+			if(character == listOfBags.get(i).name){
+				return i;
+			}
+		}
+		return -1;
+
+	}
 }
