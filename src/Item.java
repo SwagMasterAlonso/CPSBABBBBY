@@ -50,6 +50,46 @@ public class Item {
 		return this.assignment;
 	}
 
+	public UnaryExclusive getuExclusive() {
+		return uExclusive;
+	}
+
+	public void setuExclusive(UnaryExclusive uExclusive) {
+		this.uExclusive = uExclusive;
+	}
+
+	public UnaryInclusive getuInclusive() {
+		return uInclusive;
+	}
+
+	public void setuInclusive(UnaryInclusive uInclusive) {
+		this.uInclusive = uInclusive;
+	}
+
+	public BinaryEquals getbEquals() {
+		return bEquals;
+	}
+
+	public void setbEquals(BinaryEquals bEquals) {
+		this.bEquals = bEquals;
+	}
+
+	public BinaryNotEquals getbNotEquals() {
+		return bNotEquals;
+	}
+
+	public void setbNotEquals(BinaryNotEquals bNotEquals) {
+		this.bNotEquals = bNotEquals;
+	}
+
+	public BinarySimultaneous getbSim() {
+		return bSim;
+	}
+
+	public void setbSim(BinarySimultaneous bSim) {
+		this.bSim = bSim;
+	}
+
 	public void setAssignment(Bag bagSol) {
 		this.assignment = bagSol;
 	}
