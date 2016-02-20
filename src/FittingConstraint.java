@@ -6,10 +6,21 @@ public class FittingConstraint {
 	}
 
 	public boolean checkConstraint() {
+		int sum = 0;
+		Boolean isValid = false;
 		if(this.bagObj.listOfItems.size() >= this.bagObj.getMin() && this.bagObj.listOfItems.size() <= this.bagObj.getMax()) {
-			return true;
+			isValid = true;
 		} else {
-			return false;
+			isValid = false;
 		}
+		for (Item i: this.bagObj.getListOfItems()) {
+			sum += i.getWeight();
+		}
+		if (sum >= this.bagObj.weight) {
+			isValid = false;
+		} else {
+			isValid = true;
+		}
+		return isValid;
 	}
 }
