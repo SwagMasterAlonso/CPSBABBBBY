@@ -303,6 +303,7 @@ public class Main {
 		for(Bag c: bagList){
 
 			System.out.println("In bag " + c);
+			c.getListOfItems().add(tempItem);
 
 
 			if(c.fc.checkConstraint()){
@@ -311,9 +312,12 @@ public class Main {
 				
 				
 				for(Item turnUp:c.getListOfItems()){
+					
+					System.out.println("Starting for");
+					
+					
 					System.out.println("Constraints all pass");
 					if(turnUp.superXXCheckAllConstraintsXXsuper()){
-						c.getListOfItems().add(tempItem);
 
 						result = backTrack(bagList,itemList);
 

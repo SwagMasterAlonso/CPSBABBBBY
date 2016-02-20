@@ -100,8 +100,13 @@ public class Item {
 		Boolean isValid = true;
 		
 		
+		System.out.println("Checking All Constraints bby");
 		if(this.uExclusive !=null){
 			isValid = this.uExclusive.checkConstraint(assignment);
+			
+			
+			System.out.println("1 "+isValid);
+
 			
 				if(isValid == false){
 					return false;
@@ -112,6 +117,9 @@ public class Item {
 		if(this.uInclusive != null){
 			isValid = this.uInclusive.checkConstraint(assignment);
 			
+			
+			System.out.println("2 "+isValid);
+
 			if(isValid == false){
 				return false;
 			}
@@ -121,6 +129,9 @@ public class Item {
 		if(this.bEquals != null){
 			isValid = this.bEquals.checkConstraint();
 			
+			
+			System.out.println("3 "+isValid);
+
 			if(isValid == false){
 				return false;
 			}
@@ -129,6 +140,9 @@ public class Item {
 		if(this.bSim != null){
 			isValid = this.bSim.checkConstraint();
 			
+			
+			System.out.println("4 "+isValid);
+
 			if(isValid == false){
 				return false;
 			}
@@ -137,6 +151,9 @@ public class Item {
 		if(this.bNotEquals != null){
 			isValid = this.bNotEquals.checkConstraint();
 			
+			
+			System.out.println("5 "+isValid);
+
 			if(isValid == false){
 				return false;
 			}
