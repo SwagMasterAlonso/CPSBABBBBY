@@ -118,7 +118,7 @@ public class Main {
 						continue;
 					}
 				case 3:
-					UnaryInclusive uin;
+					UnaryInclusive uin = null;
 					if (line.contains("#####") && line.contains("unary exclusive")) {
 						System.out.println("entering section "+line);
 						counter++;
@@ -130,7 +130,7 @@ public class Main {
 							if (i.getName() == fields[0]) {
 								uin = new UnaryInclusive(i);
 								for (int k = 1; k< fields.length; k++) {
-									uin.addToDomain();
+									uin.addToDomain(listOfBags.get(getBagIndex(fields[k])));
 								}
 							}
 							i.setuInclusive(uin);
@@ -139,15 +139,28 @@ public class Main {
 						continue;
 					}
 				case 4:
+					UnaryExclusive uex = null;
 					if (line.contains("#####") && line.contains("binary equals")) {
 						System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
 						System.out.println("Reading unary exclusive info.");
+						String[] fields = line.split(" ");
+						for (Item i: listOfItems) {
+							if (i.getName() == fields[0]) {
+								uex = new UnaryExclusive(i);
+								for (int k = 1; k< fields.length; k++) {
+									uex.addToDomain(listOfBags.get(getBagIndex(fields[k])));
+								}
+							}
+							i.setuExclusive(uex);
+						}
+						System.out.println("Read in "+line);
 						continue;
 					}
 				case 5:
+					BinaryEquals beq = null;
 					if (line.contains("#####") && line.contains("binary not")) {
 						System.out.println("entering section "+line);
 						counter++;
@@ -155,12 +168,23 @@ public class Main {
 					} else {
 						System.out.println("Reading binary equals info.");
 						String[] fields = line.split(" ");
-						String item1 = fields[0];
-						String item2 = fields[1];
-						System.out.println("item "+item1+" must be with "+item2);
+						Item item1 = null, item2 = null;
+
+						for (Item i: listOfItems) {
+							if (i.getName() == fields[0]) {
+								item1 = i;
+							} else if (i.getName() == fields[1]) {
+								item2 = i;
+							}
+						}
+						beq = new BinaryEquals(item1, item2);
+						item1.setbEquals(beq);
+						beq = new BinaryEquals(item2, item1);
+						item2.setbEquals(beq);
 						continue;
 					}
 				case 6:
+					BinaryNotEquals bNotEq = null;
 					if (line.contains("#####") && line.contains("binary simultaneous")) {
 						System.out.println("entering section "+line);
 						counter++;
@@ -168,13 +192,52 @@ public class Main {
 					} else {
 						System.out.println("Reading binary not equals info.");
 						String[] fields = line.split(" ");
-						String item1 = fields[0];
-						String item2 = fields[1];
-						System.out.println("item "+item1+" cannot be with "+item2);
+						Item item1 = null, item2 = null;
+
+						for (Item i: listOfItems) {
+							if (i.getName() == fields[0]) {
+								item1 = i;
+							} else if (i.getName() == fields[1]) {
+								item2 = i;
+							}
+						}
+						bNotEq = new BinaryNotEquals(item1, item2);
+						item1.setbNotEquals(bNotEq);
+						bNotEq = new BinaryNotEquals(item2, item1);
+						item2.setbNotEquals(bNotEq);
 						continue;
 					}
 				case 7:
+					BinarySimultaneous bsim = null;
 					System.out.println("Reading binary simultaneous info.");
+					String[] fields = line.split(" ");
+					Item item1 = null, item2 = null;
+
+					for (Item i: listOfItems) {
+						if (i.getName() == fields[0]) {
+							item1 = i;
+						} else if (i.getName() == fields[1]) {
+							item2 = i;
+						}
+					}
+					if (itemSeenForBSim(item1)) {
+						item1.getbSim().addTo1Bags(listOfBags.get(getBagIndex(fields[2])));
+						item1.getbSim().addTo2Bags(listOfBags.get(getBagIndex(fields[3])));
+					} else {
+						bsim = new BinarySimultaneous(item1, item2);
+						bsim.addTo1Bags(listOfBags.get(getBagIndex(fields[2])));
+						bsim.addTo2Bags(listOfBags.get(getBagIndex(fields[3])));
+						item1.setbSim(bsim);
+					}
+					if (itemSeenForBSim(item2)) {
+						item2.getbSim().addTo1Bags(listOfBags.get(getBagIndex(fields[3])));
+						item1.getbSim().addTo2Bags(listOfBags.get(getBagIndex(fields[2])));
+					} else {
+						bsim = new BinarySimultaneous(item2, item1);
+						bsim.addTo1Bags(listOfBags.get(getBagIndex(fields[3])));
+						bsim.addTo2Bags(listOfBags.get(getBagIndex(fields[2])));
+						item2.setbSim(bsim);
+					}
 					continue;
 				default:
 					System.out.println("Already reached end of file");
@@ -232,8 +295,8 @@ public class Main {
 
 
 	}
-	
-	public int getBagIndex(String character){
+
+	static public int getBagIndex(String character){
 
 		for(int i = 0; i <listOfBags.size();i++){
 			if(character == listOfBags.get(i).name){
@@ -242,5 +305,12 @@ public class Main {
 		}
 		return -1;
 
+	}
+
+	static public boolean itemSeenForBSim(Item i) {
+		if (i.bSim != null) {
+			return true;
+		}
+		return false;
 	}
 }

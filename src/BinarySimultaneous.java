@@ -37,10 +37,14 @@ public class BinarySimultaneous {
 		}
 	}
 	public void addTo1Bags(Bag bag) {
-		this.validBagsFor1.add(bag);
+		if (!this.validBagsFor1.contains(bag)) {
+			this.validBagsFor1.add(bag);
+		}
 	}
 
 	public void addTo2Bags(Bag bag) {
-		this.validBagsFor2.add(bag);
+		if (!this.validBagsFor2.contains(bag)) {
+			this.validBagsFor2.add(bag);
+		}
 	}
 }
