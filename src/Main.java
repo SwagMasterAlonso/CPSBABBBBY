@@ -127,13 +127,14 @@ public class Main {
 						System.out.println("Reading unary inclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
-							if (i.getName() == fields[0]) {
+							if (i.getName().equals(fields[0])) {
 								uin = new UnaryInclusive(i);
 								for (int k = 1; k< fields.length; k++) {
 									uin.addToDomain(listOfBags.get(getBagIndex(fields[k])));
 								}
+								i.setuInclusive(uin);
 							}
-							i.setuInclusive(uin);
+
 						}
 						System.out.println("Read in "+line);
 						continue;
@@ -148,13 +149,14 @@ public class Main {
 						System.out.println("Reading unary exclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
-							if (i.getName() == fields[0]) {
+							if (i.getName().equals(fields[0])) {
 								uex = new UnaryExclusive(i);
 								for (int k = 1; k< fields.length; k++) {
 									uex.addToDomain(listOfBags.get(getBagIndex(fields[k])));
 								}
+								i.setuExclusive(uex);
 							}
-							i.setuExclusive(uex);
+
 						}
 						System.out.println("Read in "+line);
 						continue;
@@ -171,9 +173,9 @@ public class Main {
 						Item item1 = null, item2 = null;
 
 						for (Item i: listOfItems) {
-							if (i.getName() == fields[0]) {
+							if (i.getName().equals(fields[0])) {
 								item1 = i;
-							} else if (i.getName() == fields[1]) {
+							} else if (i.getName().equals(fields[1])) {
 								item2 = i;
 							}
 						}
@@ -195,9 +197,9 @@ public class Main {
 						Item item1 = null, item2 = null;
 
 						for (Item i: listOfItems) {
-							if (i.getName() == fields[0]) {
+							if (i.getName().equals(fields[0])) {
 								item1 = i;
-							} else if (i.getName() == fields[1]) {
+							} else if (i.getName().equals(fields[1])) {
 								item2 = i;
 							}
 						}
@@ -214,9 +216,9 @@ public class Main {
 					Item item1 = null, item2 = null;
 
 					for (Item i: listOfItems) {
-						if (i.getName() == fields[0]) {
+						if (i.getName().equals(fields[0])) {
 							item1 = i;
-						} else if (i.getName() == fields[1]) {
+						} else if (i.getName().equals(fields[1])) {
 							item2 = i;
 						}
 					}
@@ -256,50 +258,50 @@ public class Main {
 	}
 
 
-	static List<Bag> backTrack(List<Bag> bagList, List<Item> itemList){
-
-		Item tempItem;
-		boolean isDone = false;
-		List<Bag> result = null;
-		if(itemList.isEmpty()){
-			for(Bag b:bagList){
-				if(b.fc.checkConstraint()){
-
-					isDone = true;
-				} else {
-					isDone = false;
-				}
-			}
-		}
-
-		if(isDone){
-			return result;
-		}
-
-		tempItem = itemList.remove(0);
-
-		for(Bag c: bagList){
-			if(c.fc.checkConstraint()){
-				c.getListOfItems().add(tempItem);
-
-
-
-				result = backTrack(bagList,itemList);
-
-
-
-
-
-			}
-		}
-
-
-	}
+//	static List<Bag> backTrack(List<Bag> bagList, List<Item> itemList){
+//
+//		Item tempItem;
+//		boolean isDone = false;
+//		List<Bag> result = null;
+//		if(itemList.isEmpty()){
+//			for(Bag b:bagList){
+//				if(b.fc.checkConstraint()){
+//
+//					isDone = true;
+//				} else {
+//					isDone = false;
+//				}
+//			}
+//		}
+//
+//		if(isDone){
+//			return result;
+//		}
+//
+//		tempItem = itemList.remove(0);
+//
+//		for(Bag c: bagList){
+//			if(c.fc.checkConstraint()){
+//				c.getListOfItems().add(tempItem);
+//
+//
+//
+//				result = backTrack(bagList,itemList);
+//
+//
+//
+//
+//
+//			}
+//		}
+//
+//
+//	}
 
 	static public int getBagIndex(String character){
 
 		for(int i = 0; i <listOfBags.size();i++){
-			if(character == listOfBags.get(i).name){
+			if(character.equals(listOfBags.get(i).name)){
 				return i;
 			}
 		}

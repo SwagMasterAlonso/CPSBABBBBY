@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ public class BinarySimultaneous {
 	public BinarySimultaneous(Item item, Item item2){
 		this.itemObj1 = item;
 		this.itemObj2 = item2;
+		this.validBagsFor1 = new ArrayList<Bag>();
+		this.validBagsFor2 = new ArrayList<Bag>();
 	}
 
 	public Boolean checkConstraint(){
