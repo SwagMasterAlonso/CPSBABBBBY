@@ -1,12 +1,17 @@
 ##### - variables
-A 10
-B 10
+A 4
+B 5
+C 2
+D 2
+E 3
 ##### - values
-a 10
-b 10
+a 8
+b 8
 ##### - fitting limits
 ##### - unary inclusive
 ##### - unary exclusive
+A a
+B b
 ##### - binary equals
 ##### - binary not equals
 ##### - binary simultaneous

@@ -13,14 +13,22 @@ public class FittingConstraint {
 		} else {
 			isValid = false;
 		}
+		
+		
+		System.out.println("James code returned " + isValid );
+		
+		
 		for (Item i: this.bagObj.getListOfItems()) {
 			sum += i.getWeight();
 		}
-		if (sum >= this.bagObj.weight) {
+		if (sum > this.bagObj.weight) {
 			isValid = false;
 		} else {
 			isValid = true;
 		}
+		
+		System.out.println("James code 2 returned " + isValid );
+
 		return isValid;
 	}
 }

@@ -293,7 +293,7 @@ public class Main {
 
 
 
-		System.out.println("Starting Backtrack Bittttch");
+		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
 
 		System.out.println("Before "+itemList.size());
 		tempItem = itemList.remove(0);
@@ -303,9 +303,12 @@ public class Main {
 		for(Bag c: bagList){
 
 			System.out.println("In bag " + c);
+			System.out.println("1");
+			System.out.println("2");
+
 			c.getListOfItems().add(tempItem);
 
-
+			
 			if(c.fc.checkConstraint()){
 
 				System.out.println("Passed fitting");
@@ -320,7 +323,7 @@ public class Main {
 					if(turnUp.superXXCheckAllConstraintsXXsuper()){
 
 						result = backTrack(bagList,itemList);
-
+						System.out.println("Doing backtrack again");
 
 						if(result != false){
 							return true;
