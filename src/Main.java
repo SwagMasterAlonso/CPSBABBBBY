@@ -291,9 +291,15 @@ public class Main {
 		}
 
 
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
 
 
 		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
 
 		System.out.println("Before "+itemList.size());
 		tempItem = itemList.remove(0);
@@ -327,15 +333,20 @@ public class Main {
 
 						if(result != false){
 							return true;
+							
 						}
-
 						c.getListOfItems().remove(tempItem);
+
 
 					}
 
 
 				}
 
+
+			} else {
+				System.out.println("DIDNT WORK AT ALL");
+				c.getListOfItems().remove(tempItem);
 
 			}
 
