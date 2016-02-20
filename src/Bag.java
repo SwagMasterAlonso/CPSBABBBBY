@@ -26,7 +26,9 @@ public class Bag {
 	}
 
 	public String toString(){
-		return this.name+" with capacity "+this.weight+" from "+this.fittingMin+" to max "+this.fittingMax;
+		//return this.name+" with capacity "+this.weight+" from "+this.fittingMin+" to max "+this.fittingMax;
+		return this.name + " " +listOfItems;
+	
 	}
 
 	public void setMin(int fitMin) {
