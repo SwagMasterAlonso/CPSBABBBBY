@@ -12,6 +12,7 @@ public class Main {
 
 	static List<Item> listOfItems = new ArrayList<Item>();
 
+	static List<Bag> finalBag = null;
 
 	public static void main(String[] args) {
 
@@ -34,7 +35,7 @@ public class Main {
 
 		parseData(fileName);
 
-
+		backTrack(listOfBags,listOfItems);
 	}
 
 
@@ -258,45 +259,84 @@ public class Main {
 	}
 
 
-//	static List<Bag> backTrack(List<Bag> bagList, List<Item> itemList){
-//
-//		Item tempItem;
-//		boolean isDone = false;
-//		List<Bag> result = null;
-//		if(itemList.isEmpty()){
-//			for(Bag b:bagList){
-//				if(b.fc.checkConstraint()){
-//
-//					isDone = true;
-//				} else {
-//					isDone = false;
-//				}
-//			}
-//		}
-//
-//		if(isDone){
-//			return result;
-//		}
-//
-//		tempItem = itemList.remove(0);
-//
-//		for(Bag c: bagList){
-//			if(c.fc.checkConstraint()){
-//				c.getListOfItems().add(tempItem);
-//
-//
-//
-//				result = backTrack(bagList,itemList);
-//
-//
-//
-//
-//
-//			}
-//		}
-//
-//
-//	}
+	static Boolean backTrack(List<Bag> bagList, List<Item> itemList){
+
+		Item tempItem;
+		boolean isDone = false;
+		boolean result = false;
+
+		if(itemList.isEmpty()){
+			System.out.println("IsEmpty");
+			for(Bag b:bagList){
+				if(b.fc.checkConstraint()){
+
+					for(int i = 0; i < b.getListOfItems().size();i++){
+						if(b.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
+							isDone = true;
+						} else {
+							isDone = false;
+						}
+					}
+				} else {
+					isDone = false;
+				}
+			}
+		}
+
+		if(isDone){
+			finalBag = bagList;
+			System.out.println(finalBag);
+			System.out.println("Finished with assignment, returning");
+			return true;
+		}
+
+
+
+
+		System.out.println("Starting Backtrack Bittttch");
+
+		System.out.println("Before "+itemList.size());
+		tempItem = itemList.remove(0);
+		System.out.println("After " + itemList.size());
+
+		System.out.println("Removing " + tempItem);
+		for(Bag c: bagList){
+
+			System.out.println("In bag " + c);
+
+
+			if(c.fc.checkConstraint()){
+
+				System.out.println("Passed fitting");
+				
+				
+				for(Item turnUp:c.getListOfItems()){
+					System.out.println("Constraints all pass");
+					if(turnUp.superXXCheckAllConstraintsXXsuper()){
+						c.getListOfItems().add(tempItem);
+
+						result = backTrack(bagList,itemList);
+
+
+						if(result != false){
+							return true;
+						}
+
+						c.getListOfItems().remove(tempItem);
+
+					}
+
+
+				}
+
+
+			}
+
+
+		}
+
+		return false;
+	}
 
 	static public int getBagIndex(String character){
 
