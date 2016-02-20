@@ -20,7 +20,9 @@ public class FittingConstraint {
 		
 		for (Item i: this.bagObj.getListOfItems()) {
 			sum += i.getWeight();
+			System.out.println("In bag " + this.bagObj.name + " has " + i);
 		}
+		
 		if (sum > this.bagObj.weight) {
 			isValid = false;
 		} else {

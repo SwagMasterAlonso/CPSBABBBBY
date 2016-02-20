@@ -4,13 +4,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Main {
 
 
-	static List<Bag> listOfBags = new ArrayList<Bag>();
+	static List<Bag> listOfBags = new CopyOnWriteArrayList<Bag>();
 
-	static List<Item> listOfItems = new ArrayList<Item>();
+	static List<Item> listOfItems = new CopyOnWriteArrayList<Item>();
 
 	static List<Bag> finalBag = null;
 
@@ -265,6 +266,8 @@ public class Main {
 		boolean isDone = false;
 		boolean result = false;
 
+		
+		
 		if(itemList.isEmpty()){
 			System.out.println("IsEmpty");
 			for(Bag b:bagList){
@@ -312,7 +315,12 @@ public class Main {
 			System.out.println("1");
 			System.out.println("2");
 
-			c.getListOfItems().add(tempItem);
+			
+			if(!c.getListOfItems().contains(tempItem)){
+				c.getListOfItems().add(tempItem);
+			} else {
+				continue;
+			}
 
 			
 			if(c.fc.checkConstraint()){
@@ -327,16 +335,17 @@ public class Main {
 					
 					System.out.println("Constraints all pass");
 					if(turnUp.superXXCheckAllConstraintsXXsuper()){
+						System.out.println("Doing backtrack again");
 
 						result = backTrack(bagList,itemList);
-						System.out.println("Doing backtrack again");
 
 						if(result != false){
 							return true;
 							
 						}
 						c.getListOfItems().remove(tempItem);
-
+						c.fc = new FittingConstraint(c);
+						itemList.add(tempItem);
 
 					}
 
@@ -347,6 +356,8 @@ public class Main {
 			} else {
 				System.out.println("DIDNT WORK AT ALL");
 				c.getListOfItems().remove(tempItem);
+				c.fc = new FittingConstraint(c);
+				itemList.add(tempItem);
 
 			}
 

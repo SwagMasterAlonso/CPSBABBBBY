@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
 Alonso, jameschow
 */
 public class UnaryInclusive {
 	Item itemObj;
-	List<Bag> validDomain = new ArrayList<Bag>();
+	List<Bag> validDomain = new CopyOnWriteArrayList<Bag>();
 	public UnaryInclusive(Item item){
 		this.itemObj = item;
 	}

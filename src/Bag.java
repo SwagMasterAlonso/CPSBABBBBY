@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
 Alonso
@@ -9,7 +10,7 @@ public class Bag {
 
 	String name;
 	int weight;
-	List<Item> listOfItems = new ArrayList<Item>();
+	List<Item> listOfItems = new CopyOnWriteArrayList<Item>();
 	int fittingMin, fittingMax;
 	FittingConstraint fc;
 

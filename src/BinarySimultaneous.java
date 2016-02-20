@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *
@@ -12,8 +13,8 @@ public class BinarySimultaneous {
 	public BinarySimultaneous(Item item, Item item2){
 		this.itemObj1 = item;
 		this.itemObj2 = item2;
-		this.validBagsFor1 = new ArrayList<Bag>();
-		this.validBagsFor2 = new ArrayList<Bag>();
+		this.validBagsFor1 = new CopyOnWriteArrayList<Bag>();
+		this.validBagsFor2 = new CopyOnWriteArrayList<Bag>();
 	}
 
 	public Boolean checkConstraint(){
