@@ -215,6 +215,9 @@ public class Main {
 
 						System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
+//						item1.bNotEquals = new ArrayList<BinaryNotEquals>();
+//						item2.bNotEquals = new ArrayList<BinaryNotEquals>();
+
 						item1.getbNotEquals().add(bNotEq);
 						bNotEq = new BinaryNotEquals(item2, item1);
 						item2.getbNotEquals().add(bNotEq);
@@ -320,8 +323,11 @@ public class Main {
 		System.out.println(itemList);
 		System.out.println("Before "+itemList.size());
 
-
+		if(!copy.isEmpty()){
 		tempItem = copy.remove(0);
+		} else {
+			return false;
+		}
 		System.out.println("After " + itemList.size());
 
 		System.out.println("Removing " + tempItem);
@@ -336,6 +342,8 @@ public class Main {
 				c.getListOfItems().add(tempItem);
 				tempItem.setAssignment(c);
 			} else {
+				tempItem.setAssignment(c);
+
 				continue;
 			}
 
@@ -456,6 +464,36 @@ public class Main {
 		}
 		return temp;
 	}
+	
+	private static int leastConstrainingValue() {
+		int counter;
+		int temp = 0;
+		int max = 10;
+		for (int i = 0; i< listOfItems.size(); i++){
+			counter = 0;
+			if (listOfItems.get(i).getbEquals() != null) {
+				counter++;
+			}
+			if (listOfItems.get(i).getbNotEquals() != null) {
+				counter++;
+			}
+			if (listOfItems.get(i).getbSim() != null) {
+				counter++;
+			}
+			if (counter <= max) {
+				max = counter;
+				temp = i;
+			}
+		}
+		return temp;
+	}
+	
+	
+	
+	
+	
+	
+	
 	private static int getHighestWeight() {
 		int temp = 0;
 		int max = 0;
