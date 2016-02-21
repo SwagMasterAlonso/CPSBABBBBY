@@ -181,19 +181,17 @@ public class Main {
 								item2 = i;
 							}
 						}
-						
+
 						System.out.println("Item 1 is: " + item1 + " Item 2 is : " +item2);
 						beq = new BinaryEquals(item1, item2);
-						item1.setbEquals(beq);
-						
+						item1.getbEquals().add(beq);
+
 						System.out.println("Item1  is" + item1.bEquals);
 						BinaryEquals beq2 = new BinaryEquals(item2, item1);
 
-						item2.setbEquals(beq2);
+						item2.getbEquals().add(beq2);
 						System.out.println("Item2  is" + item2.bEquals);
 
-						
-						
 						continue;
 					}
 				case 6:
@@ -214,7 +212,7 @@ public class Main {
 								item2 = i;
 							}
 						}
-						
+
 						System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
 						item1.getbNotEquals().add(bNotEq);

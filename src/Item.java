@@ -16,7 +16,7 @@ public class Item {
 	List<Bag> range;
 	UnaryExclusive uExclusive;
 	UnaryInclusive uInclusive;
-	BinaryEquals bEquals;
+	List<BinaryEquals> bEquals = new ArrayList<BinaryEquals>();
 	List<BinaryNotEquals> bNotEquals = new ArrayList<BinaryNotEquals>();
 	BinarySimultaneous bSim;
 	public Item(String nameItem, int weightItem){
@@ -25,7 +25,6 @@ public class Item {
 		this.assignment = null;
 		this.uExclusive = null;
 		this.uInclusive = null;
-		this.bEquals = null;
 		this.bSim = null;
 		this.domain = new ArrayList<Bag>();
 	}
@@ -91,15 +90,9 @@ public class Item {
 		this.uInclusive = uInclusive;
 	}
 
-	public BinaryEquals getbEquals() {
+	public List<BinaryEquals> getbEquals() {
 		return bEquals;
 	}
-
-	public void setbEquals(BinaryEquals bEquals) {
-		this.bEquals = bEquals;
-	}
-
-
 
 	public List<BinaryNotEquals> getbNotEquals() {
 		return bNotEquals;
@@ -154,13 +147,15 @@ public class Item {
 
 
 		if(this.bEquals != null){
-			isValid = this.bEquals.checkConstraint();
+			for (BinaryEquals beq: this.bEquals) {
+				isValid = beq.checkConstraint();
 
 
-//			System.out.println("3 "+isValid);
+//				System.out.println("3 "+isValid);
 
-			if(isValid == false){
-				return false;
+				if(isValid == false){
+					return false;
+				}
 			}
 		}
 
@@ -177,14 +172,14 @@ public class Item {
 
 		if(this.bNotEquals != null){
 
-			
+
 			System.out.println("This bNotEquals is: "+bNotEquals);
 
 			for(BinaryNotEquals bneq:bNotEquals){
-				
-				
+
+
 				isValid = bneq.checkConstraint();
-				
+
 				if(isValid == false){
 					return false;
 				}
