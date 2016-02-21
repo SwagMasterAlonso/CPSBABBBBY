@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
 Alonso
-*/
+ */
 public class Item {
 
 
@@ -17,7 +17,7 @@ public class Item {
 	UnaryExclusive uExclusive;
 	UnaryInclusive uInclusive;
 	List<BinaryEquals> bEquals = new ArrayList<BinaryEquals>();
-	List<BinaryNotEquals> bNotEquals = new ArrayList<BinaryNotEquals>();
+	List<BinaryNotEquals> bNotEquals = null;
 	BinarySimultaneous bSim;
 	public Item(String nameItem, int weightItem){
 		this.name = nameItem;
@@ -26,7 +26,7 @@ public class Item {
 		this.uExclusive = null;
 		this.uInclusive = null;
 		this.bSim = null;
-		this.bNotEquals	= new ArrayList<BinaryNotEquals>();
+		this.bNotEquals	= null;
 		this.domain = new ArrayList<Bag>();
 	}
 
@@ -126,12 +126,12 @@ public class Item {
 			isValid = this.uExclusive.checkConstraint(assignment);
 
 
-//			System.out.println("1 "+isValid);
+			//			System.out.println("1 "+isValid);
 
 
-				if(isValid == false){
-					return false;
-				}
+			if(isValid == false){
+				return false;
+			}
 		}
 
 
@@ -139,7 +139,7 @@ public class Item {
 			isValid = this.uInclusive.checkConstraint(assignment);
 
 
-//			System.out.println("2 "+isValid);
+			//			System.out.println("2 "+isValid);
 
 			if(isValid == false){
 				return false;
@@ -152,7 +152,7 @@ public class Item {
 				isValid = beq.checkConstraint();
 
 
-//				System.out.println("3 "+isValid);
+				//				System.out.println("3 "+isValid);
 
 				if(isValid == false){
 					return false;
@@ -164,7 +164,7 @@ public class Item {
 			isValid = this.bSim.checkConstraint();
 
 
-//			System.out.println("4 "+isValid);
+			//			System.out.println("4 "+isValid);
 
 			if(isValid == false){
 				return false;
@@ -174,15 +174,16 @@ public class Item {
 		if(this.bNotEquals != null){
 
 
-			System.out.println("This bNotEquals is: "+bNotEquals);
+			for(Item i:this.assignment.getListOfItems()){
+				for(BinaryNotEquals bneq:bNotEquals){
 
-			for(BinaryNotEquals bneq:bNotEquals){
+					System.out.println("This bNotEquals is: "+bNotEquals);
 
+					isValid = bneq.checkConstraint();
 
-				isValid = bneq.checkConstraint();
-
-				if(isValid == false){
-					return false;
+					if(isValid == false){
+						return false;
+					}
 				}
 			}
 		}

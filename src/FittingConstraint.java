@@ -18,12 +18,22 @@ public class FittingConstraint {
 		
 		
 		//System.out.println("James code returned " + isValid );
-		
+		 
 		
 		for (Item i: this.bagObj.getListOfItems()) {
 			sum += i.getWeight();
 			//System.out.println("In bag " + this.bagObj.name + " has " + i);
 		}
+		
+		
+		
+		System.out.println("Sum is: " + sum + " Bag Weight is: "+Math.floor(this.bagObj.weight) * .9);
+		if(sum> Math.floor(this.bagObj.weight*.9)){
+			isWeightValid = true;
+		} else {
+			isWeightValid = false;
+		}
+		
 		
 		if (sum > this.bagObj.weight) {
 			isWeightValid = false;

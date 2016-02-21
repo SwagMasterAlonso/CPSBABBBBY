@@ -19,22 +19,35 @@ public class BinarySimultaneous {
 
 	public Boolean checkConstraint(){
 		if (this.validBagsFor1.size() == 1 && this.validBagsFor2.size() == 1) {
-			if(this.itemObj1.getAssignment() == this.validBagsFor1.get(0) && this.itemObj2.getAssignment() == this.validBagsFor2.get(0)) {
+			if(this.itemObj1.getAssignment() == this.validBagsFor1.get(0)) {
+				
+				System.out.println("Returning True 1");
 				return true;
 			} else {
+				System.out.println("Returning False 1");
+
 				return false;
 			}
 		} else {
 			if (this.validBagsFor1.size() > 1) {
+
 				if (this.itemObj2.getAssignment() != this.validBagsFor2.get(0)) {
+					System.out.println("Returning True 2");
+
 					return true;
 				} else {
+					System.out.println("Returning False 2");
+
 					return false;
 				}
 			} else  {
 				if (this.itemObj1.getAssignment() != this.validBagsFor1.get(0)) {
+					System.out.println("Returning True 3");
+
 					return true;
 				} else {
+					System.out.println("Returning False 3");
+
 					return false;
 				}
 			}
