@@ -7,11 +7,13 @@ public class FittingConstraint {
 
 	public boolean checkConstraint() {
 		int sum = 0;
-		Boolean isValid = false;
+		Boolean isWeightValid = false;
+		Boolean isFitValid = false;
+
 		if(this.bagObj.listOfItems.size() >= this.bagObj.getMin() && this.bagObj.listOfItems.size() <= this.bagObj.getMax()) {
-			isValid = true;
+			isFitValid = true;
 		} else {
-			isValid = false;
+			isFitValid = false;
 		}
 		
 		
@@ -24,13 +26,18 @@ public class FittingConstraint {
 		}
 		
 		if (sum > this.bagObj.weight) {
-			isValid = false;
+			isWeightValid = false;
 		} else {
-			isValid = true;
+			isWeightValid = true;
 		}
 		
 		//System.out.println("James code 2 returned " + isValid );
 
-		return isValid;
+		
+		if(isWeightValid&&isFitValid){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

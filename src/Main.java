@@ -318,14 +318,14 @@ public class Main {
 			System.out.println("1");
 			System.out.println("2");
 
-//			
-//			if(!c.getListOfItems().contains(tempItem)){
-//				c.getListOfItems().add(tempItem);
-//			} else {
-//				continue;
-//			}
+			
+			if(!c.getListOfItems().contains(tempItem)){
+				c.getListOfItems().add(tempItem);
+			} else {
+				continue;
+			}
 
-			c.getListOfItems().add(tempItem);
+			//c.getListOfItems().add(tempItem);
 
 			if(c.fc.checkConstraint()){
 
@@ -379,11 +379,11 @@ public class Main {
 				System.out.println("Before Add ItemList: " + itemList);
 
 				c.fc = new FittingConstraint(c);
-//				if(!itemList.contains(tempItem)){
-//					itemList.add(tempItem);
-//				} else {
-//					continue;
-//				}
+				if(!itemList.contains(tempItem)){
+					itemList.add(tempItem);
+				} else {
+					continue;
+				}
 
 				System.out.println("After Add ItemList: " + itemList);
 
