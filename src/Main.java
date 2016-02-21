@@ -153,8 +153,13 @@ public class Main {
 						for (Item i: listOfItems) {
 							if (i.getName().equals(fields[0])) {
 								uex = new UnaryExclusive(i);
-								for (int k = 1; k< fields.length; k++) {
-									uex.addToDomain(listOfBags.get(getBagIndex(fields[k])));
+								for (Bag b: listOfBags) {
+									for (int k = 1; k< fields.length; k++) {
+										if (b.name.equals(fields[k])) {
+											break;
+										}
+									}
+									uex.addToDomain(b);
 								}
 								i.setuExclusive(uex);
 							}
