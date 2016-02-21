@@ -1,3 +1,7 @@
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
 Alonso
 */
@@ -8,6 +12,8 @@ public class Item {
 	Bag assignment;
 	int weight;
 	//FittingConstraint fConstraint;
+	List<Bag> domain;
+	List<Bag> range;
 	UnaryExclusive uExclusive;
 	UnaryInclusive uInclusive;
 	BinaryEquals bEquals;
@@ -22,13 +28,29 @@ public class Item {
 		this.bEquals = null;
 		this.bNotEquals = null;
 		this.bSim = null;
+		this.domain = new ArrayList<Bag>();
 	}
 
 	public String toString(){
 		return this.name;
 	}
 
-
+	public void createDomain() {
+		if (this.uInclusive != null) {
+			for(int i = 0; i < this.uInclusive.getValidDomain().size(); i++) {
+				this.domain.add(this.uInclusive.getValidDomain().get(i));
+			}
+		}
+		if (this.uExclusive != null) {
+			for (int j = 0; j < this.range.size(); j++) {
+				for(int i = 0; i < this.uExclusive.getValidDomain().size(); i++) {
+					if (!this.range.get(i).name.equals(this.uExclusive.getValidDomain().get(j))) {
+						this.domain.add(this.range.get(i));
+					}
+				}
+			}
+		}
+	}
 
 	public String getName() {
 		return this.name;
@@ -48,6 +70,10 @@ public class Item {
 
 	public Bag getAssignment() {
 		return this.assignment;
+	}
+
+	public List<Bag> getDomain() {
+		return this.domain;
 	}
 
 	public UnaryExclusive getuExclusive() {
@@ -93,73 +119,73 @@ public class Item {
 	public void setAssignment(Bag bagSol) {
 		this.assignment = bagSol;
 	}
-	
+
 	//Senpai Alonso Martinez, the greatest programmer ever, named this function.
 	public Boolean superXXCheckAllConstraintsXXsuper(){
-		
+
 		Boolean isValid = true;
-		
-		
-		//System.out.println("Checking All Constraints bby");
+
+
+		System.out.println("Checking All Constraints bby");
 		if(this.uExclusive !=null){
 			isValid = this.uExclusive.checkConstraint(assignment);
-			
-			
-			//System.out.println("1 "+isValid);
 
-			
+
+//			System.out.println("1 "+isValid);
+
+
 				if(isValid == false){
 					return false;
 				}
 		}
-		
-		
+
+
 		if(this.uInclusive != null){
 			isValid = this.uInclusive.checkConstraint(assignment);
-			
-			
-			//System.out.println("2 "+isValid);
+
+
+//			System.out.println("2 "+isValid);
 
 			if(isValid == false){
 				return false;
 			}
 		}
-		
-		
+
+
 		if(this.bEquals != null){
 			isValid = this.bEquals.checkConstraint();
-			
-			
-			//System.out.println("3 "+isValid);
+
+
+//			System.out.println("3 "+isValid);
 
 			if(isValid == false){
 				return false;
 			}
 		}
-		
+
 		if(this.bSim != null){
 			isValid = this.bSim.checkConstraint();
-			
-			
-			//System.out.println("4 "+isValid);
+
+
+//			System.out.println("4 "+isValid);
 
 			if(isValid == false){
 				return false;
 			}
 		}
-		
+
 		if(this.bNotEquals != null){
 			isValid = this.bNotEquals.checkConstraint();
-			
-			
-			//System.out.println("5 "+isValid);
+
+
+//			System.out.println("5 "+isValid);
 
 			if(isValid == false){
 				return false;
 			}
 		}
-		
-		
+
+
 		return isValid;
 	}
 }

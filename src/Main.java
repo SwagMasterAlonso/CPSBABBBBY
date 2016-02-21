@@ -266,8 +266,8 @@ public class Main {
 		boolean isDone = false;
 		boolean result = false;
 
-		
-		
+
+
 		if(itemList.isEmpty()){
 			System.out.println("IsEmpty");
 			for(Bag b:bagList){
@@ -275,7 +275,7 @@ public class Main {
 
 					for(int i = 0; i < b.getListOfItems().size();i++){
 						if(((List<Item>) b.getListOfItems()).get(i).superXXCheckAllConstraintsXXsuper()){
-							
+
 							isDone = true;
 						} else {
 							isDone = false;
@@ -306,8 +306,8 @@ public class Main {
 		System.out.println("");
 		System.out.println(itemList);
 		System.out.println("Before "+itemList.size());
-		
-		
+
+
 		tempItem = itemList.remove(0);
 		System.out.println("After " + itemList.size());
 
@@ -318,7 +318,7 @@ public class Main {
 			System.out.println("1");
 			System.out.println("2");
 
-			
+
 			if(!c.getListOfItems().contains(tempItem)){
 				c.getListOfItems().add(tempItem);
 			} else {
@@ -330,32 +330,32 @@ public class Main {
 			if(c.fc.checkConstraint()){
 
 				System.out.println("Passed fitting");
-				
-				
-					
-					
+
+
+
+
 					for(int i = 0; i < c.getListOfItems().size();i++){
 					System.out.println("Starting for");
-					
-					
+
+
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
 						System.out.println("Doing backtrack again");
 						System.out.println("Constraints all pass");
 
-						
+
 						System.out.println(c.name+ " "+c.getListOfItems());
 						result = backTrack(bagList,itemList);
 
 						if(result != false){
-							
+
 							return true;
-							
+
 						}
-						
+
 						//c.getListOfItems().remove(0);
-						
+
 						c.getListOfItems().remove(tempItem);
-					
+
 						c.fc = new FittingConstraint(c);
 						if(!itemList.contains(tempItem)){
 							itemList.add(tempItem);
@@ -368,12 +368,12 @@ public class Main {
 
 			} else {
 				System.out.println("DIDNT WORK AT ALL");
-			
+
 				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
-				
-				
+
+
 				c.getListOfItems().remove(tempItem);
-				
+
 				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
 
 				System.out.println("Before Add ItemList: " + itemList);
@@ -395,6 +395,54 @@ public class Main {
 		return false;
 	}
 
+
+	private static int minRemValue() {
+		int temp = 0;
+		int min = 1000;
+		for (int i = 0; i< listOfItems.size(); i++){
+			if (listOfItems.get(i).getDomain().size() < min) {
+				temp = i;
+				min = listOfItems.get(i).getDomain().size();
+			}
+		}
+		return temp;
+	}
+
+	private static int degreeHeuristic() {
+		int counter;
+		int temp = 0;
+		int max = 0;
+		for (int i = 0; i< listOfItems.size(); i++){
+			counter = 0;
+			if (listOfItems.get(i).getbEquals() != null) {
+				counter++;
+			}
+			if (listOfItems.get(i).getbNotEquals() != null) {
+				counter++;
+			}
+			if (listOfItems.get(i).getbSim() != null) {
+				counter++;
+			}
+			if (counter >= max) {
+				max = counter;
+				temp = i;
+			}
+		}
+		return temp;
+	}
+	private static int getHighestWeight() {
+		int temp = 0;
+		int max = 0;
+		for (int i = 0; i< listOfItems.size(); i++){
+			if (listOfItems.get(i).getWeight() >= max) {
+				temp = i;
+				max = listOfItems.get(i).getWeight();
+			}
+		}
+		return temp;
+	}
+
+
 	static public int getBagIndex(String character){
 
 		for(int i = 0; i <listOfBags.size();i++){
@@ -412,7 +460,7 @@ public class Main {
 		}
 		return false;
 	}
-	
-	
-	
+
+
+
 }
