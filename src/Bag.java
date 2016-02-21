@@ -19,7 +19,7 @@ public class Bag {
 
 	int fittingMin, fittingMax;
 	FittingConstraint fc;
-
+	BinaryNotEquals bneq;
 
 
 
@@ -30,6 +30,14 @@ public class Bag {
 		this.fittingMin = 0;
 		this.fittingMax = 20;
 		this.fc = new FittingConstraint(this);
+	}
+
+	public BinaryNotEquals getBneq() {
+		return bneq;
+	}
+
+	public void setBneq(BinaryNotEquals bneq) {
+		this.bneq = bneq;
 	}
 
 	public String toString(){

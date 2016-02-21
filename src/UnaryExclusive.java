@@ -4,7 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UnaryExclusive {
 	Item itemObj;
-	List<Bag> validDomain = new CopyOnWriteArrayList<Bag>();
+	List<Bag> validDomain = new ArrayList<Bag>();
 	public UnaryExclusive(Item item){
 		this.itemObj = item;
 	}

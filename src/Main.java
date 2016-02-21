@@ -181,10 +181,19 @@ public class Main {
 								item2 = i;
 							}
 						}
+						
+						System.out.println("Item 1 is: " + item1 + " Item 2 is : " +item2);
 						beq = new BinaryEquals(item1, item2);
 						item1.setbEquals(beq);
-						beq = new BinaryEquals(item2, item1);
-						item2.setbEquals(beq);
+						
+						System.out.println("Item1  is" + item1.bEquals);
+						BinaryEquals beq2 = new BinaryEquals(item2, item1);
+
+						item2.setbEquals(beq2);
+						System.out.println("Item2  is" + item2.bEquals);
+
+						
+						
 						continue;
 					}
 				case 6:
@@ -205,10 +214,14 @@ public class Main {
 								item2 = i;
 							}
 						}
+						
+						System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
-						item1.setbNotEquals(bNotEq);
+						item1.getbNotEquals().add(bNotEq);
 						bNotEq = new BinaryNotEquals(item2, item1);
-						item2.setbNotEquals(bNotEq);
+						item2.getbNotEquals().add(bNotEq);
+						System.out.println("List is: "+ item1.getbNotEquals());
+						System.out.println(item1.getbNotEquals() + " YY "+item2.getbNotEquals());
 						continue;
 					}
 				case 7:
@@ -266,7 +279,9 @@ public class Main {
 		boolean isDone = false;
 		boolean result = false;
 
-
+		for(Item i: itemList){
+			System.out.println(i.bEquals);
+		}
 
 		if(itemList.isEmpty()){
 			System.out.println("IsEmpty");
@@ -345,6 +360,7 @@ public class Main {
 
 
 						System.out.println(c.name+ " "+c.getListOfItems());
+						System.out.println("Starting Backtrack");
 						result = backTrack(bagList,itemList);
 						System.out.println("Is Succesful");
 						if(result != false){
@@ -354,7 +370,7 @@ public class Main {
 						}
 
 						//c.getListOfItems().remove(0);
-
+						System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
@@ -362,6 +378,7 @@ public class Main {
 							itemList.add(tempItem);
 						}
 					} else {
+						System.out.println("Didnt pass all constraints");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 					}
