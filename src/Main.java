@@ -9,9 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Main {
 
 
-	static List<Bag> listOfBags = new CopyOnWriteArrayList<Bag>();
+	static List<Bag> listOfBags = new ArrayList<Bag>();
 
-	static List<Item> listOfItems = new CopyOnWriteArrayList<Item>();
+	static List<Item> listOfItems = new ArrayList<Item>();
 
 	static List<Bag> finalBag = null;
 
@@ -28,7 +28,7 @@ public class Main {
 
 			fileName = inputString;
 		} else {
-			System.out.println("Not enough input arguments");
+			//System.out.println("Not enough input arguments");
 			System.exit(0);
 		}
 
@@ -69,10 +69,10 @@ public class Main {
 				switch(counter) {
 				case 0:
 					if (line.contains("#####") && line.contains("variables")) {
-						System.out.println("Beginning header");
+						//System.out.println("Beginning header");
 						break;
 					} else if (line.contains("#####") && line.contains("values")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -81,13 +81,13 @@ public class Main {
 						weight = Integer.parseInt(fields[1]);
 						Item itemObject = new Item(item,weight);
 						listOfItems.add(itemObject);
-						System.out.println("item "+item+" weighs "+weight);
+						//System.out.println("item "+item+" weighs "+weight);
 						continue;
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
 
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -96,17 +96,17 @@ public class Main {
 						weight = Integer.parseInt(fields[1]);
 						Bag bagObject = new Bag(bag,weight);
 						listOfBags.add(bagObject);
-						System.out.println("bag "+bag+" can hold "+weight);
+						//System.out.println("bag "+bag+" can hold "+weight);
 						continue;
 					}
 				case 2:
 					if (line.contains("#####") && line.contains("unary inclusive")) {
 
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading fitting limits info.");
+						//System.out.println("Reading fitting limits info.");
 						String[] fields = line.split(" ");
 						int min = Integer.parseInt(fields[0]);
 						int max = Integer.parseInt(fields[1]);
@@ -115,18 +115,18 @@ public class Main {
 							b.setMax(max);
 						}
 						for (Bag b: listOfBags) {
-							System.out.println(b);
+							//System.out.println(b);
 						}
 						continue;
 					}
 				case 3:
 					UnaryInclusive uin = null;
 					if (line.contains("#####") && line.contains("unary exclusive")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading unary inclusive info.");
+						//System.out.println("Reading unary inclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
 							if (i.getName().equals(fields[0])) {
@@ -138,17 +138,17 @@ public class Main {
 							}
 
 						}
-						System.out.println("Read in "+line);
+						//System.out.println("Read in "+line);
 						continue;
 					}
 				case 4:
 					UnaryExclusive uex = null;
 					if (line.contains("#####") && line.contains("binary equals")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading unary exclusive info.");
+						//System.out.println("Reading unary exclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
 							if (i.getName().equals(fields[0])) {
@@ -160,17 +160,17 @@ public class Main {
 							}
 
 						}
-						System.out.println("Read in "+line);
+						//System.out.println("Read in "+line);
 						continue;
 					}
 				case 5:
 					BinaryEquals beq = null;
 					if (line.contains("#####") && line.contains("binary not")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading binary equals info.");
+						//System.out.println("Reading binary equals info.");
 						String[] fields = line.split(" ");
 						Item item1 = null, item2 = null;
 
@@ -190,11 +190,11 @@ public class Main {
 				case 6:
 					BinaryNotEquals bNotEq = null;
 					if (line.contains("#####") && line.contains("binary simultaneous")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading binary not equals info.");
+						//System.out.println("Reading binary not equals info.");
 						String[] fields = line.split(" ");
 						Item item1 = null, item2 = null;
 
@@ -213,7 +213,7 @@ public class Main {
 					}
 				case 7:
 					BinarySimultaneous bsim = null;
-					System.out.println("Reading binary simultaneous info.");
+					//System.out.println("Reading binary simultaneous info.");
 					String[] fields = line.split(" ");
 					Item item1 = null, item2 = null;
 
@@ -244,7 +244,7 @@ public class Main {
 					}
 					continue;
 				default:
-					System.out.println("Already reached end of file");
+					//System.out.println("Already reached end of file");
 				}
 			}
 		}
@@ -269,7 +269,7 @@ public class Main {
 		
 		
 		if(itemList.isEmpty()){
-			System.out.println("IsEmpty");
+			//System.out.println("IsEmpty");
 			for(Bag b:bagList){
 				if(b.fc.checkConstraint()){
 
@@ -288,32 +288,32 @@ public class Main {
 
 		if(isDone){
 			finalBag = bagList;
-			System.out.println(finalBag);
-			System.out.println("Finished with assignment, returning");
+			//System.out.println(finalBag);
+			//System.out.println("Finished with assignment, returning");
 			return true;
 		}
 
 
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
 
 
-		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-
-		System.out.println("Before "+itemList.size());
+		//System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println(itemList);
+		//System.out.println("Before "+itemList.size());
 		tempItem = itemList.remove(0);
-		System.out.println("After " + itemList.size());
+		//System.out.println("After " + itemList.size());
 
-		System.out.println("Removing " + tempItem);
+		//System.out.println("Removing " + tempItem);
 		for(Bag c: bagList){
 
-			System.out.println("In bag " + c);
-			System.out.println("1");
-			System.out.println("2");
+			//System.out.println("In bag " + c);
+			//System.out.println("1");
+			//System.out.println("2");
 
 			
 			if(!c.getListOfItems().contains(tempItem)){
@@ -325,17 +325,17 @@ public class Main {
 			
 			if(c.fc.checkConstraint()){
 
-				System.out.println("Passed fitting");
+				//System.out.println("Passed fitting");
 				
 				
 				for(Item turnUp:c.getListOfItems()){
 					
-					System.out.println("Starting for");
+					//System.out.println("Starting for");
 					
 					
-					System.out.println("Constraints all pass");
+					//System.out.println("Constraints all pass");
 					if(turnUp.superXXCheckAllConstraintsXXsuper()){
-						System.out.println("Doing backtrack again");
+						//System.out.println("Doing backtrack again");
 
 						result = backTrack(bagList,itemList);
 
@@ -345,8 +345,11 @@ public class Main {
 						}
 						c.getListOfItems().remove(tempItem);
 						c.fc = new FittingConstraint(c);
-						itemList.add(tempItem);
-
+//						if(!itemList.contains(tempItem)){
+//							itemList.add(tempItem);
+//						} else {
+//							continue;
+//						}
 					}
 
 
@@ -354,10 +357,23 @@ public class Main {
 
 
 			} else {
-				System.out.println("DIDNT WORK AT ALL");
+				//System.out.println("DIDNT WORK AT ALL");
+			
+				//System.out.println("Before Remove: " + c.getListOfItems());
 				c.getListOfItems().remove(tempItem);
+				
+				//System.out.println("After Remove: " + c.getListOfItems());
+
+				//System.out.println("Before Add ItemList: " + itemList);
+
 				c.fc = new FittingConstraint(c);
-				itemList.add(tempItem);
+				if(!itemList.contains(tempItem)){
+					itemList.add(tempItem);
+				} else {
+					continue;
+				}
+				
+				//System.out.println("After Add ItemList: " + itemList);
 
 			}
 
