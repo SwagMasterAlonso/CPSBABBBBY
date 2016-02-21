@@ -276,9 +276,9 @@ public class Main {
 		Item tempItem;
 		boolean isDone = false;
 		boolean result = false;
-
+		List<Item> copy = new ArrayList<Item>();
 		for(Item i: itemList){
-			System.out.println(i.bEquals);
+			copy.add(i);
 		}
 
 		if(itemList.isEmpty()){
@@ -321,7 +321,7 @@ public class Main {
 		System.out.println("Before "+itemList.size());
 
 
-		tempItem = itemList.remove(0);
+		tempItem = copy.remove(0);
 		System.out.println("After " + itemList.size());
 
 		System.out.println("Removing " + tempItem);
@@ -359,7 +359,7 @@ public class Main {
 
 						System.out.println(c.name+ " "+c.getListOfItems());
 						System.out.println("Starting Backtrack");
-						result = backTrack(bagList,itemList);
+						result = backTrack(bagList,copy);
 						System.out.println("Is Succesful");
 						if(result != false){
 							System.out.println("Current Assignment is: " + bagList);
@@ -372,9 +372,9 @@ public class Main {
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
-						if(!itemList.contains(tempItem)){
-							itemList.add(tempItem);
-						}
+//						if(!itemList.contains(tempItem)){
+//							itemList.add(tempItem);
+//						}
 						System.out.println("Current Assignment is: " + bagList);
 
 					} else {
