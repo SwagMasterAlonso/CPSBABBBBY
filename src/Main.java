@@ -464,7 +464,7 @@ public class Main {
 		}
 		return temp;
 	}
-	
+
 	private static int leastConstrainingValue() {
 		int counter;
 		int temp = 0;
@@ -487,13 +487,13 @@ public class Main {
 		}
 		return temp;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
 	private static int getHighestWeight() {
 		int temp = 0;
 		int max = 0;
@@ -524,7 +524,103 @@ public class Main {
 		}
 		return false;
 	}
+	static public Boolean forwardChecking(List<Bag> assignment, List<Item> itemList, List<Bag> domain) {
+		Item tempItem;
+		boolean isDone = false;
+		boolean result = false;
+		List<Item> copy = new ArrayList<Item>();
+		List<Bag> domainPrime;
+		for(Item i: itemList){
+			copy.add(i);
+		}
+		/**Begin check for complete assignment.*/
+		if(itemList.isEmpty()){
+			System.out.println("IsEmpty");
+			for(Bag b:assignment){
+				if(b.fc.checkConstraint()){
+					for(int i = 0; i < b.getListOfItems().size();i++){
+						if(((List<Item>) b.getListOfItems()).get(i).superXXCheckAllConstraintsXXsuper()){
+							isDone = true;
+						} else {
+							isDone = false;
+						}
+					}
+				} else {
+					isDone = false;
+				}
+			}
+		}
 
+		if(isDone){
+			finalBag = assignment;
+			System.out.println(finalBag);
+			System.out.println("Finished with assignment, returning");
+			return true;
+		}
+		/*Finishing the check for if assignment is complete*/
+
+		tempItem = copy.remove(0);
+		for(Bag c: assignment){
+
+			if(!c.getListOfItems().contains(tempItem)){
+				c.getListOfItems().add(tempItem);
+				tempItem.setAssignment(c);
+			} else {
+				continue;
+			}
+			if(c.fc.checkConstraint()){
+				System.out.println("Passed fitting constraints.");
+				for(int i = 0; i < c.getListOfItems().size();i++){
+					System.out.println("Starting for");
+					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
+
+						//saving the domain
+						domainPrime = new ArrayList<Bag>(domain);
+
+
+						System.out.println("Doing backtrack again");
+						System.out.println("Constraints all pass");
+						System.out.println(c.name+ " "+c.getListOfItems());
+						System.out.println("Starting Backtrack");
+						result = forwardChecking(assignment,copy, domainPrime);
+						System.out.println("Assignment is Successful");
+						if(result != false){
+							System.out.println("Current Assignment is: " + assignment);
+							return true;
+
+						}
+
+						System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
+						c.getListOfItems().remove(tempItem);
+						tempItem.setAssignment(null);
+						c.fc = new FittingConstraint(c);
+					} else {
+						System.out.println("assignment did not pass all constraints");
+						c.getListOfItems().remove(tempItem);
+						tempItem.setAssignment(null);
+					}
+				}
+			} else {
+				System.out.println("Assignment DID NOT SATISFY AT ALL");
+
+				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
+				c.getListOfItems().remove(tempItem);
+				tempItem.setAssignment(null);
+
+				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
+
+				System.out.println("Before Add ItemList: " + itemList);
+				System.out.println("After Add ItemList: " + itemList);
+
+			}
+
+
+		}
+		finalBag = assignment;
+		System.out.println(finalBag);
+		System.out.println("Failing");
+		return false;
+	}
 
 
 }
