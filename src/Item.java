@@ -17,7 +17,7 @@ public class Item {
 	UnaryExclusive uExclusive;
 	UnaryInclusive uInclusive;
 	BinaryEquals bEquals;
-	List<BinaryNotEquals> bNotEquals = new ArrayList<BinaryNotEquals>();
+	List<BinaryNotEquals> bNotEquals;
 	BinarySimultaneous bSim;
 	public Item(String nameItem, int weightItem){
 		this.name = nameItem;
@@ -27,6 +27,7 @@ public class Item {
 		this.uInclusive = null;
 		this.bEquals = null;
 		this.bSim = null;
+		this.bNotEquals	= new ArrayList<BinaryNotEquals>();
 		this.domain = new ArrayList<Bag>();
 	}
 

@@ -364,7 +364,7 @@ public class Main {
 						result = backTrack(bagList,itemList);
 						System.out.println("Is Succesful");
 						if(result != false){
-
+							System.out.println("Current Assignment is: " + bagList);
 							return true;
 
 						}
@@ -377,10 +377,14 @@ public class Main {
 						if(!itemList.contains(tempItem)){
 							itemList.add(tempItem);
 						}
+						System.out.println("Current Assignment is: " + bagList);
+
 					} else {
 						System.out.println("Didnt pass all constraints");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
+						System.out.println("Current Assignment is: " + bagList);
+
 					}
 
 
