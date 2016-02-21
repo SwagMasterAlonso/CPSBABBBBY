@@ -321,6 +321,7 @@ public class Main {
 
 			if(!c.getListOfItems().contains(tempItem)){
 				c.getListOfItems().add(tempItem);
+				tempItem.setAssignment(c);
 			} else {
 				continue;
 			}
@@ -355,7 +356,7 @@ public class Main {
 						//c.getListOfItems().remove(0);
 
 						c.getListOfItems().remove(tempItem);
-
+						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
 						if(!itemList.contains(tempItem)){
 							itemList.add(tempItem);
