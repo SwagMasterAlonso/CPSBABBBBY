@@ -325,43 +325,41 @@ public class Main {
 				continue;
 			}
 
-			//c.getListOfItems().add(tempItem);
+		//	c.getListOfItems().add(tempItem);
 
 			if(c.fc.checkConstraint()){
 
 				System.out.println("Passed fitting");
 				
 				
-			//	for(Item turnUp:c.getListOfItems()){
 					
 					
 					for(int i = 0; i < c.getListOfItems().size();i++){
 					System.out.println("Starting for");
 					
 					
-					System.out.println("Constraints all pass");
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
 						System.out.println("Doing backtrack again");
+						System.out.println("Constraints all pass");
 
+						
+						System.out.println(c.name+ " "+c.getListOfItems());
 						result = backTrack(bagList,itemList);
 
 						if(result != false){
+							
 							return true;
 							
 						}
 						
-						
-						
-						
-						
 						//c.getListOfItems().remove(0);
+						
 						c.getListOfItems().remove(tempItem);
+					
 						c.fc = new FittingConstraint(c);
-//						if(!itemList.contains(tempItem)){
-//							itemList.add(tempItem);
-//						} else {
-//							continue;
-//						}
+						if(!itemList.contains(tempItem)){
+							itemList.add(tempItem);
+						}
 					}
 
 
@@ -372,18 +370,20 @@ public class Main {
 				System.out.println("DIDNT WORK AT ALL");
 			
 				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
+				
+				
 				c.getListOfItems().remove(tempItem);
 				
 				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
 
 				System.out.println("Before Add ItemList: " + itemList);
 
-				c.fc = new FittingConstraint(c);
-				if(!itemList.contains(tempItem)){
-					itemList.add(tempItem);
-				} else {
-					continue;
-				}
+			//	c.fc = new FittingConstraint(c);
+//				if(!itemList.contains(tempItem)){
+//					itemList.add(tempItem);
+//				} else {
+//					continue;
+//				}
 
 				System.out.println("After Add ItemList: " + itemList);
 

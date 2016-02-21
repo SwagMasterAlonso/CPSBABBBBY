@@ -34,6 +34,8 @@ public class FittingConstraint {
 		//System.out.println("James code 2 returned " + isValid );
 
 		
+		System.out.println("Is Weight Valid: " + isWeightValid + "    Is Fit Valid: "+isFitValid );
+		System.out.println("Bag Size is: " + bagObj.getListOfItems().size());
 		if(isWeightValid&&isFitValid){
 			return true;
 		} else {
