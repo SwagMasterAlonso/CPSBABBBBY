@@ -15,12 +15,12 @@ public class FittingConstraint {
 		}
 		
 		
-		System.out.println("James code returned " + isValid );
+		//System.out.println("James code returned " + isValid );
 		
 		
 		for (Item i: this.bagObj.getListOfItems()) {
 			sum += i.getWeight();
-			System.out.println("In bag " + this.bagObj.name + " has " + i);
+			//System.out.println("In bag " + this.bagObj.name + " has " + i);
 		}
 		
 		if (sum > this.bagObj.weight) {
@@ -29,7 +29,7 @@ public class FittingConstraint {
 			isValid = true;
 		}
 		
-		System.out.println("James code 2 returned " + isValid );
+		//System.out.println("James code 2 returned " + isValid );
 
 		return isValid;
 	}

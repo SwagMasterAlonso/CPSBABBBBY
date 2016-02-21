@@ -1,5 +1,9 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -10,7 +14,9 @@ public class Bag {
 
 	String name;
 	int weight;
-	List<Item> listOfItems = new CopyOnWriteArrayList<Item>();
+	List<Item> listOfItems = new ArrayList<Item>();
+	//Queue<Item> listOfItems = new LinkedList<Item>();
+
 	int fittingMin, fittingMax;
 	FittingConstraint fc;
 
@@ -50,8 +56,8 @@ public class Bag {
 		return listOfItems;
 	}
 
-	public void setListOfItems(List<Item> listOfItems) {
-		this.listOfItems = listOfItems;
-	}
+//	public void setListOfItems(List<Item> listOfItems) {
+//		this.listOfItems = listOfItems;
+//	}
 
 }
