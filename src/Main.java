@@ -326,7 +326,7 @@ public class Main {
 				continue;
 			}
 
-		//	c.getListOfItems().add(tempItem);
+			//	c.getListOfItems().add(tempItem);
 
 			if(c.fc.checkConstraint()){
 
@@ -335,7 +335,7 @@ public class Main {
 
 
 
-					for(int i = 0; i < c.getListOfItems().size();i++){
+				for(int i = 0; i < c.getListOfItems().size();i++){
 					System.out.println("Starting for");
 
 
@@ -346,7 +346,7 @@ public class Main {
 
 						System.out.println(c.name+ " "+c.getListOfItems());
 						result = backTrack(bagList,itemList);
-
+						System.out.println("Is Succesful");
 						if(result != false){
 
 							return true;
@@ -361,6 +361,9 @@ public class Main {
 						if(!itemList.contains(tempItem)){
 							itemList.add(tempItem);
 						}
+					} else {
+						c.getListOfItems().remove(tempItem);
+						tempItem.setAssignment(null);
 					}
 
 
@@ -374,17 +377,18 @@ public class Main {
 
 
 				c.getListOfItems().remove(tempItem);
+				tempItem.setAssignment(null);
 
 				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
 
 				System.out.println("Before Add ItemList: " + itemList);
 
-			//	c.fc = new FittingConstraint(c);
-//				if(!itemList.contains(tempItem)){
-//					itemList.add(tempItem);
-//				} else {
-//					continue;
-//				}
+				//	c.fc = new FittingConstraint(c);
+				//				if(!itemList.contains(tempItem)){
+				//					itemList.add(tempItem);
+				//				} else {
+				//					continue;
+				//				}
 
 				System.out.println("After Add ItemList: " + itemList);
 
@@ -392,6 +396,8 @@ public class Main {
 
 
 		}
+		finalBag = bagList;
+		System.out.println(finalBag);
 		System.out.println("Failing");
 		return false;
 	}
