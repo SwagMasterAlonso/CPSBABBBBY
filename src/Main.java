@@ -35,12 +35,12 @@ public class Main {
 
 
 		parseData(fileName);
-		backTrack(listOfBags,listOfItems);
-		System.out.println("Count is: " + count);
-
-
 		//backTrack(listOfBags,listOfItems);
+
+
+		backTrack(listOfBags,listOfItems);
 		//forwardChecking(listOfBags, listOfItems, listOfBags);
+		System.out.println("Count is: " + count);
 
 
 	}
@@ -221,8 +221,8 @@ public class Main {
 
 						System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
-//						item1.bNotEquals = new ArrayList<BinaryNotEquals>();
-//						item2.bNotEquals = new ArrayList<BinaryNotEquals>();
+						//						item1.bNotEquals = new ArrayList<BinaryNotEquals>();
+						//						item2.bNotEquals = new ArrayList<BinaryNotEquals>();
 
 						item1.getbNotEquals().add(bNotEq);
 						bNotEq = new BinaryNotEquals(item2, item1);
@@ -330,11 +330,11 @@ public class Main {
 		System.out.println("Before "+itemList.size());
 
 		if(!copy.isEmpty()){
-		//tempItem = copy.remove(minRemValue(copy));
-		//tempItem = copy.remove(degreeHeuristic(copy));
-		//tempItem = copy.remove(leastConstrainingValue(copy));
-		tempItem = copy.remove(MRVANDDEGREE(copy));
-		//tempItem = copy.remove(0);
+			//tempItem = copy.remove(minRemValue(copy));
+			//tempItem = copy.remove(degreeHeuristic(copy));
+			//tempItem = copy.remove(leastConstrainingValue(copy));
+			tempItem = copy.remove(MRVANDDEGREE(copy));
+			//tempItem = copy.remove(0);
 		} else {
 			return false;
 		}
@@ -390,9 +390,9 @@ public class Main {
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
-//						if(!itemList.contains(tempItem)){
-//							itemList.add(tempItem);
-//						}
+						//						if(!itemList.contains(tempItem)){
+						//							itemList.add(tempItem);
+						//						}
 						System.out.println("Current Assignment is: " + bagList);
 
 					} else {
@@ -451,25 +451,25 @@ public class Main {
 		}
 		return temp;
 	}
-	
-	
+
+
 	private static int MRVANDDEGREE(List<Item> listOfItems){
 		int counter;
 		int temp = 0;
 		int max = 0;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			
-			
+
+
 			if(listOfItems.get(i).getDomain().size() != 0){
-				
+
 				counter+=listOfItems.get(i).getDomain().size();
 
 			}
-			
-			
+
+
 			if (listOfItems.get(i).getbEquals().size() != 0) {
-				
+
 				System.out.println("Increasing from bEquals");
 				counter+=listOfItems.get(i).getbEquals().size();
 			}
@@ -481,7 +481,7 @@ public class Main {
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
-			
+
 			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 
 			if (counter >= max) {
@@ -491,7 +491,7 @@ public class Main {
 		}
 		return temp;
 	}
-	
+
 
 	private static int degreeHeuristic(List<Item> listOfItems) {
 		int counter;
@@ -500,7 +500,7 @@ public class Main {
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
 			if (listOfItems.get(i).getbEquals().size() != 0) {
-				
+
 				System.out.println("Increasing from bEquals");
 				counter+=listOfItems.get(i).getbEquals().size();
 			}
@@ -512,7 +512,7 @@ public class Main {
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
-			
+
 			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 
 			if (counter >= max) {
@@ -542,8 +542,8 @@ public class Main {
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
-			
-			
+
+
 			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 			if (counter <= max) {
 				max = counter;
@@ -590,6 +590,10 @@ public class Main {
 		return false;
 	}
 	static public Boolean forwardChecking(List<Bag> assignment, List<Item> itemList, List<Bag> domain) {
+		
+		count++;
+		
+		
 		Item tempItem;
 		boolean isDone = false;
 		boolean result = false;
@@ -635,8 +639,16 @@ public class Main {
 		System.out.println("");
 		System.out.println(itemList);
 		System.out.println("Before "+itemList.size());
-		tempItem = copy.remove(0);
-		System.out.println("Removing "+ tempItem);
+		if(!copy.isEmpty()){
+
+		//tempItem = copy.remove(minRemValue(copy));
+		//tempItem = copy.remove(degreeHeuristic(copy));
+		//tempItem = copy.remove(leastConstrainingValue(copy));
+		tempItem = copy.remove(MRVANDDEGREE(copy));
+		} else {
+			return false;
+		}
+		//tempItem = copy.remove(0);.out.println("Removing "+ tempItem);
 		for(Bag c: domain){
 
 			if(!c.getListOfItems().contains(tempItem)){
