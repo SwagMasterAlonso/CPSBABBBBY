@@ -4,23 +4,27 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This class has the main function from which the program runs.
+ * It contains all the required algorithms, such as bactracking and forward checking.
+ * @author jameschow, amartinez
+ *
+ */
 public class Main {
 
-
+	/**The list of bags that need assignment of items.*/
 	static List<Bag> listOfBags = new ArrayList<Bag>();
-
+	/**List of items from input that must be assigned to bags.*/
 	static List<Item> listOfItems = new ArrayList<Item>();
-
+	/**The final assignment that is sent to output.*/
 	static List<Bag> finalBag = null;
 
-	static int count = 0;
+	/**
+	 * Main function that reads in inputs and runs the required algorithm.
+	 * Returns the output of the assignments.
+	 * @param args
+	 */
 	public static void main(String[] args) {
-
-
-
-
-
 		String fileName = null;
 		//get command line arguments, there should only be 2
 		if(args.length==1){
@@ -31,44 +35,35 @@ public class Main {
 			System.out.println("Not enough input arguments");
 			System.exit(0);
 		}
-
-
-
+		/**Parses the text file for reading in variables, bags, and unary and binary constraints.*/
 		parseData(fileName);
-		backTrack(listOfBags,listOfItems);
-		System.out.println("Count is: " + count);
 
-
+		/**
+		 * To choose the algorithm, uncomment the designated algorithm
+		 * and comment out the other algoritm.
+		 */
 		//backTrack(listOfBags,listOfItems);
-		//forwardChecking(listOfBags, listOfItems, listOfBags);
-
-
+		forwardChecking(listOfBags, listOfItems, listOfBags);
 	}
 
+
+
+	/**
+	 * From the input, creates the item objects and bag objects,
+	 * setting the constraints during the parsing.
+	 * @param fileName, name of the text file
+	 */
 	static void parseData(String fileName){
-
-
-
-
-
-
 		String line;
 		String item, bag;
 		int weight = 0;
 		int counter = 0;
-
-
-
-
 		BufferedReader br = null;
-
-
-
-
 		try {
-
 			br = new BufferedReader(new FileReader(fileName));
 			while ((line = br.readLine()) != null) {
+				/**switches on the section of the information.
+				 * first section is for the variables.*/
 				switch(counter) {
 				case 0:
 					if (line.contains("#####") && line.contains("variables")) {
@@ -139,7 +134,6 @@ public class Main {
 								}
 								i.setuInclusive(uin);
 							}
-
 						}
 						System.out.println("Read in "+line);
 						continue;
@@ -167,9 +161,6 @@ public class Main {
 						continue;
 					}
 				case 5:
-					for(Item i: listOfItems){
-						i.createDomain();
-					}
 					BinaryEquals beq = null;
 					if (line.contains("#####") && line.contains("binary not")) {
 						System.out.println("entering section "+line);
@@ -221,9 +212,6 @@ public class Main {
 
 						System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
-//						item1.bNotEquals = new ArrayList<BinaryNotEquals>();
-//						item2.bNotEquals = new ArrayList<BinaryNotEquals>();
-
 						item1.getbNotEquals().add(bNotEq);
 						bNotEq = new BinaryNotEquals(item2, item1);
 						item2.getbNotEquals().add(bNotEq);
@@ -280,24 +268,34 @@ public class Main {
 	}
 
 
+	/**
+	 * Backtracking algorithm that returns either a solution to the CSP
+	 * problem(true) or failure (false).
+	 * @param bagList, assignment of the variables.
+	 * @param itemList, list of variables of CSP problem.
+	 * @return
+	 */
 	static Boolean backTrack(List<Bag> bagList, List<Item> itemList){
-		count++;
+
 		Item tempItem;
 		boolean isDone = false;
 		boolean result = false;
 		List<Item> copy = new ArrayList<Item>();
+		/**Creating a copy of he item list to modify.*/
 		for(Item i: itemList){
 			copy.add(i);
 		}
 
+		/**Preliminary answer checking that only checks constraints if all
+		 * variables have been assigned.*/
 		if(itemList.isEmpty()){
 			System.out.println("IsEmpty");
+			/**Iterates through the baglist.*/
 			for(Bag b:bagList){
 				if(b.fc.checkConstraint()){
-
+					/**checks the constraints of all the items assigned in the bags.*/
 					for(int i = 0; i < b.getListOfItems().size();i++){
 						if(((List<Item>) b.getListOfItems()).get(i).superXXCheckAllConstraintsXXsuper()){
-
 							isDone = true;
 						} else {
 							isDone = false;
@@ -309,6 +307,7 @@ public class Main {
 			}
 		}
 
+		/**If the boolean isDone is true, then assign the final solution and output.*/
 		if(isDone){
 			finalBag = bagList;
 			System.out.println(finalBag);
@@ -329,47 +328,38 @@ public class Main {
 		System.out.println(itemList);
 		System.out.println("Before "+itemList.size());
 
+		/**Only removes from non-empty item list. If empty, return failure.*/
 		if(!copy.isEmpty()){
-		//tempItem = copy.remove(minRemValue(copy));
-		//tempItem = copy.remove(degreeHeuristic(copy));
-		//tempItem = copy.remove(leastConstrainingValue(copy));
-		tempItem = copy.remove(MRVANDDEGREE(copy));
-		//tempItem = copy.remove(0);
+			tempItem = copy.remove(0);
 		} else {
 			return false;
 		}
 		System.out.println("After " + itemList.size());
-
 		System.out.println("Removing " + tempItem);
+
+		/**Iterate through the variable domain.*/
 		for(Bag c: bagList){
 
 			System.out.println("In bag " + c);
 			System.out.println("1");
 			System.out.println("2");
 
-
+			/***/
 			if(!c.getListOfItems().contains(tempItem)){
 				c.getListOfItems().add(tempItem);
 				tempItem.setAssignment(c);
 			} else {
 				tempItem.setAssignment(c);
-
 				continue;
 			}
-
-			//	c.getListOfItems().add(tempItem);
-
+			/**Checking fitting constraint.*/
 			if(c.fc.checkConstraint()){
 
 				System.out.println("Passed fitting");
-
-
-
-
 				for(int i = 0; i < c.getListOfItems().size();i++){
 					System.out.println("Starting for");
 
-
+					/**Checks the constraints of each variable within the bag c.*/
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
 						System.out.println("Doing backtrack again");
 						System.out.println("Constraints all pass");
@@ -378,25 +368,22 @@ public class Main {
 						System.out.println(c.name+ " "+c.getListOfItems());
 						System.out.println("Starting Backtrack");
 						result = backTrack(bagList,copy);
-						System.out.println("Is Succesful");
+						System.out.println("Is Successful");
+						/**Only is a result is found does it return true.*/
 						if(result != false){
 							System.out.println("Current Assignment is: " + bagList);
 							return true;
 
 						}
-
-						//c.getListOfItems().remove(0);
 						System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
-//						if(!itemList.contains(tempItem)){
-//							itemList.add(tempItem);
-//						}
 						System.out.println("Current Assignment is: " + bagList);
 
 					} else {
-						System.out.println("Didnt pass all constraints");
+						/**Did not pass the fitting constraint.*/
+						System.out.println("Didn't pass all constraints");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						System.out.println("Current Assignment is: " + bagList);
@@ -405,42 +392,27 @@ public class Main {
 
 
 				}
-
-
 			} else {
 				System.out.println("DIDNT WORK AT ALL");
 
 				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
 
-
 				c.getListOfItems().remove(tempItem);
 				tempItem.setAssignment(null);
-
 				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
-
 				System.out.println("Before Add ItemList: " + itemList);
-
-				//	c.fc = new FittingConstraint(c);
-				//				if(!itemList.contains(tempItem)){
-				//					itemList.add(tempItem);
-				//				} else {
-				//					continue;
-				//				}
-
 				System.out.println("After Add ItemList: " + itemList);
-
 			}
 
-
 		}
+		/**Sets the failed baglist*/
 		finalBag = bagList;
-		System.out.println(finalBag);
 		System.out.println("Failing");
 		return false;
 	}
 
 
-	private static int minRemValue(List<Item> listOfItems) {
+	private static int minRemValue() {
 		int temp = 0;
 		int min = 1000;
 		for (int i = 0; i< listOfItems.size(); i++){
@@ -451,70 +423,22 @@ public class Main {
 		}
 		return temp;
 	}
-	
-	
-	private static int MRVANDDEGREE(List<Item> listOfItems){
+
+	private static int degreeHeuristic() {
 		int counter;
 		int temp = 0;
 		int max = 0;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			
-			
-			if(listOfItems.get(i).getDomain().size() != 0){
-				
-				counter+=listOfItems.get(i).getDomain().size();
-
+			if (listOfItems.get(i).getbEquals() != null) {
+				counter++;
 			}
-			
-			
-			if (listOfItems.get(i).getbEquals().size() != 0) {
-				
-				System.out.println("Increasing from bEquals");
-				counter+=listOfItems.get(i).getbEquals().size();
-			}
-			if (listOfItems.get(i).getbNotEquals().size() != 0) {
-				System.out.println("Increasing from bNotEquals");
-
-				counter+=listOfItems.get(i).getbNotEquals().size();
+			if (listOfItems.get(i).getbNotEquals() != null) {
+				counter++;
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
-			
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
-
-			if (counter >= max) {
-				max = counter;
-				temp = i;
-			}
-		}
-		return temp;
-	}
-	
-
-	private static int degreeHeuristic(List<Item> listOfItems) {
-		int counter;
-		int temp = 0;
-		int max = 0;
-		for (int i = 0; i< listOfItems.size(); i++){
-			counter = 0;
-			if (listOfItems.get(i).getbEquals().size() != 0) {
-				
-				System.out.println("Increasing from bEquals");
-				counter+=listOfItems.get(i).getbEquals().size();
-			}
-			if (listOfItems.get(i).getbNotEquals().size() != 0) {
-				System.out.println("Increasing from bNotEquals");
-
-				counter+=listOfItems.get(i).getbNotEquals().size();
-			}
-			if (listOfItems.get(i).getbSim() != null) {
-				counter++;
-			}
-			
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
-
 			if (counter >= max) {
 				max = counter;
 				temp = i;
@@ -523,28 +447,21 @@ public class Main {
 		return temp;
 	}
 
-	private static int leastConstrainingValue(List<Item> listOfItems) {
+	private static int leastConstrainingValue() {
 		int counter;
 		int temp = 0;
 		int max = 10;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			if (listOfItems.get(i).getbEquals().size() != 0) {
-				counter+=listOfItems.get(i).getbEquals().size();
-				System.out.println("Increasing from bEquals");
-
+			if (listOfItems.get(i).getbEquals() != null) {
+				counter++;
 			}
-			if (listOfItems.get(i).getbNotEquals().size() != 0) {
-				counter+=listOfItems.get(i).getbNotEquals().size();
-				System.out.println("Increasing from bNotEquals");
-
+			if (listOfItems.get(i).getbNotEquals() != null) {
+				counter++;
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
-			
-			
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 			if (counter <= max) {
 				max = counter;
 				temp = i;

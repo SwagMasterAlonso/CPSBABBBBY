@@ -3,22 +3,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-Alonso
- */
+ * Item class that holds its weight and holds its constraints.
+ * @author jameschow, amartinez
+ * */
 public class Item {
-
-
+	/**Identifier for the item*/
 	String name;
+	/**Assigned bag for item.*/
 	Bag assignment;
+	/**Weight of the item.*/
 	int weight;
-	//FittingConstraint fConstraint;
+	/**Domain of the item.*/
 	List<Bag> domain;
+	/**All possible bags of the item.*/
 	List<Bag> range;
+	/**Unary inclusive constraint for the item. Item must be in these bags*/
 	UnaryExclusive uExclusive;
+	/**Unary exclusive constraint for the item. Item must not be in these bags.*/
 	UnaryInclusive uInclusive;
+	/**List of binary constraints for an item.*/
 	List<BinaryEquals> bEquals;
+	/**List of Binary constraints such that two items must not be in the same bag.*/
 	List<BinaryNotEquals> bNotEquals = null;
+	/**Binary constraint that indicates mutual inclusion or exclusion.*/
 	BinarySimultaneous bSim;
+
+	/**
+	 * Constructor that initializes the item with its weight,
+	 * constraints, and domain.
+	 * @param nameItem
+	 * @param weightItem
+	 */
 	public Item(String nameItem, int weightItem){
 		this.name = nameItem;
 		this.weight = weightItem;
@@ -31,10 +46,12 @@ public class Item {
 		this.domain = new ArrayList<Bag>();
 	}
 
+	/**ToString method for debugging purposes.*/
 	public String toString(){
 		return this.name;
 	}
 
+	/**Sets the domain for an item by taking into account only unary constraints.*/
 	public void createDomain() {
 		if (this.uInclusive != null) {
 			for(int i = 0; i < this.uInclusive.getValidDomain().size(); i++) {
@@ -52,84 +69,98 @@ public class Item {
 		}
 	}
 
+	/**Getter for the item name.*/
 	public String getName() {
 		return this.name;
 	}
 
+	/**Setter for the item name.*/
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**Getter for the item weight.*/
 	public int getWeight() {
 		return weight;
 	}
 
+	/**Setter for the item weight.*/
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 
+	/**Getter for the assignment of the item.*/
 	public Bag getAssignment() {
 		return this.assignment;
 	}
 
+	/**Getter for the domain.*/
 	public List<Bag> getDomain() {
 		return this.domain;
 	}
 
+	/**Getter for the unary exclusive constraint.*/
 	public UnaryExclusive getuExclusive() {
 		return uExclusive;
 	}
 
+	/**Setter for the unary exclusive constraint.*/
 	public void setuExclusive(UnaryExclusive uExclusive) {
 		this.uExclusive = uExclusive;
 	}
 
+	/**Getter for the unary inclusive constraint.*/
 	public UnaryInclusive getuInclusive() {
 		return uInclusive;
 	}
 
+	/**Setter for the unary inclusive constraint.*/
 	public void setuInclusive(UnaryInclusive uInclusive) {
 		this.uInclusive = uInclusive;
 	}
 
+	/**Getter for the binary equals constraint.*/
 	public List<BinaryEquals> getbEquals() {
 		return bEquals;
 	}
 
+	/**Getter for the binary notEquals constraint.*/
 	public List<BinaryNotEquals> getbNotEquals() {
 		return bNotEquals;
 	}
 
+	/**Setter for the binary notEquals constraint.*/
 	public void setbNotEquals(List<BinaryNotEquals> bNotEquals) {
 		this.bNotEquals = bNotEquals;
 	}
 
+	/**Getter for the binary simultaneous constraint.*/
 	public BinarySimultaneous getbSim() {
 		return bSim;
 	}
 
+	/**Setter for the binary simultaneous constraint.*/
 	public void setbSim(BinarySimultaneous bSim) {
 		this.bSim = bSim;
 	}
 
+	/**Setter for the assignment.*/
 	public void setAssignment(Bag bagSol) {
 		this.assignment = bagSol;
 	}
 
-	//Senpai Alonso Martinez, the greatest programmer ever, named this function.
+	/**
+	 * Determines if all the constraints are satisfied by an assignment of the variables.
+	 * @return true or false.
+	 */
 	public Boolean superXXCheckAllConstraintsXXsuper(){
 
 		Boolean isValid = true;
 
 
-		System.out.println("Checking All Constraints bby");
+		System.out.println("Checking All Constraints");
 		if(this.uExclusive !=null){
 			isValid = this.uExclusive.checkConstraint(assignment);
-
-
-			//			System.out.println("1 "+isValid);
-
-
 			if(isValid == false){
 				return false;
 			}
@@ -138,10 +169,6 @@ public class Item {
 
 		if(this.uInclusive != null){
 			isValid = this.uInclusive.checkConstraint(assignment);
-
-
-			//			System.out.println("2 "+isValid);
-
 			if(isValid == false){
 				return false;
 			}
@@ -149,12 +176,10 @@ public class Item {
 
 
 		if(this.bEquals != null){
+			/**Must iterate through all binary constraints to determine constraint
+			 * Satisfaction.*/
 			for (BinaryEquals beq: this.bEquals) {
 				isValid = beq.checkConstraint();
-
-
-				//				System.out.println("3 "+isValid);
-
 				if(isValid == false){
 					return false;
 				}
@@ -163,18 +188,14 @@ public class Item {
 
 		if(this.bSim != null){
 			isValid = this.bSim.checkConstraint();
-
-
-			//			System.out.println("4 "+isValid);
-
 			if(isValid == false){
 				return false;
 			}
 		}
 
 		if(this.bNotEquals != null){
-
-
+			/**Must iterate through all binary constraints to determine constraint
+			 * Satisfaction.*/
 			for(Item i:this.assignment.getListOfItems()){
 				for(BinaryNotEquals bneq:bNotEquals){
 
@@ -188,8 +209,6 @@ public class Item {
 				}
 			}
 		}
-
-
 		return isValid;
 	}
 }
