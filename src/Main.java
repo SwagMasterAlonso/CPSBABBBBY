@@ -18,6 +18,7 @@ public class Main {
 	static List<Item> listOfItems = new ArrayList<Item>();
 	/**The final assignment that is sent to output.*/
 	static List<Bag> finalBag = null;
+	static int count  = 0;
 
 	/**
 	 * Main function that reads in inputs and runs the required algorithm.
@@ -42,8 +43,10 @@ public class Main {
 		 * To choose the algorithm, uncomment the designated algorithm
 		 * and comment out the other algoritm.
 		 */
-		//backTrack(listOfBags,listOfItems);
-		forwardChecking(listOfBags, listOfItems, listOfBags);
+		backTrack(listOfBags,listOfItems);
+		//forwardChecking(listOfBags, listOfItems, listOfBags);
+		System.out.println("Count is: " + count);
+
 	}
 
 
@@ -330,7 +333,11 @@ public class Main {
 
 		/**Only removes from non-empty item list. If empty, return failure.*/
 		if(!copy.isEmpty()){
-			tempItem = copy.remove(0);
+			//tempItem = copy.remove(minRemValue(copy));
+			//tempItem = copy.remove(degreeHeuristic(copy));
+			//tempItem = copy.remove(leastConstrainingValue(copy));
+			tempItem = copy.remove(MRVANDDEGREE(copy));
+			//tempItem = copy.remove(0);
 		} else {
 			return false;
 		}
@@ -423,22 +430,64 @@ public class Main {
 		}
 		return temp;
 	}
-
-	private static int degreeHeuristic() {
+	private static int MRVANDDEGREE(List<Item> listOfItems){
 		int counter;
 		int temp = 0;
 		int max = 0;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			if (listOfItems.get(i).getbEquals() != null) {
-				counter++;
+			if(listOfItems.get(i).getDomain().size() != 0){
+
+				counter+=listOfItems.get(i).getDomain().size();
 			}
-			if (listOfItems.get(i).getbNotEquals() != null) {
-				counter++;
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+
+				System.out.println("Increasing from bEquals");
+				counter+=listOfItems.get(i).getbEquals().size();
+			}
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				System.out.println("Increasing from bNotEquals");
+
+				counter+=listOfItems.get(i).getbNotEquals().size();
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
+
+
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+
+			if (counter >= max) {
+				max = counter;
+				temp = i;
+			}
+		}
+		return temp;
+	}
+
+
+	private static int degreeHeuristic(List<Item> listOfItems) {
+		int counter;
+		int temp = 0;
+		int max = 0;
+		for (int i = 0; i< listOfItems.size(); i++){
+			counter = 0;
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+
+				System.out.println("Increasing from bEquals");
+				counter+=listOfItems.get(i).getbEquals().size();
+			}
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				System.out.println("Increasing from bNotEquals");
+
+				counter+=listOfItems.get(i).getbNotEquals().size();
+			}
+			if (listOfItems.get(i).getbSim() != null) {
+				counter++;
+			}
+
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+
 			if (counter >= max) {
 				max = counter;
 				temp = i;
@@ -462,6 +511,8 @@ public class Main {
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
+
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 			if (counter <= max) {
 				max = counter;
 				temp = i;
@@ -507,6 +558,10 @@ public class Main {
 		return false;
 	}
 	static public Boolean forwardChecking(List<Bag> assignment, List<Item> itemList, List<Bag> domain) {
+
+		count++;
+
+
 		Item tempItem;
 		boolean isDone = false;
 		boolean result = false;
@@ -552,8 +607,16 @@ public class Main {
 		System.out.println("");
 		System.out.println(itemList);
 		System.out.println("Before "+itemList.size());
-		tempItem = copy.remove(0);
-		System.out.println("Removing "+ tempItem);
+		if(!copy.isEmpty()){
+
+		//tempItem = copy.remove(minRemValue(copy));
+		//tempItem = copy.remove(degreeHeuristic(copy));
+		//tempItem = copy.remove(leastConstrainingValue(copy));
+		tempItem = copy.remove(MRVANDDEGREE(copy));
+		} else {
+			return false;
+		}
+		//tempItem = copy.remove(0);.out.println("Removing "+ tempItem);
 		for(Bag c: domain){
 
 			if(!c.getListOfItems().contains(tempItem)){

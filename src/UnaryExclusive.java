@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class UnaryExclusive {
 	Item itemObj;
 	List<Bag> validDomain = new ArrayList<Bag>();
