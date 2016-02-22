@@ -419,6 +419,10 @@ public class Main {
 	}
 
 
+	
+	//minRemValue heuristic for the search
+	//returns the index of the item in the listofitems
+	//that has the least remaining values that can be assigned.
 	private static int minRemValue() {
 		int temp = 0;
 		int min = 1000;
@@ -430,10 +434,17 @@ public class Main {
 		}
 		return temp;
 	}
+
+	//MRVANDDEGREE heuristic for the search
+	//returns the index of the item in the listofitems 
+	//that has the greatest amount of constraints
 	private static int MRVANDDEGREE(List<Item> listOfItems){
 		int counter;
 		int temp = 0;
 		int max = 0;
+
+		//for loop iterates through all of the items and checks all of the constraints on the items
+		//and sums them up and returns the item with the most amount of constraints
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
 			if(listOfItems.get(i).getDomain().size() != 0){
@@ -465,11 +476,16 @@ public class Main {
 		return temp;
 	}
 
-
+	//degree heuristic for the search
+	//returns the index of the item in the listofitems 
+	//that has the greatest amount of constraints
 	private static int degreeHeuristic(List<Item> listOfItems) {
 		int counter;
 		int temp = 0;
 		int max = 0;
+
+		//for loop iterates through all of the items and checks all of the constraints on the items
+		//and sums them up and returns the item with the most amount of constraints
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
 			if (listOfItems.get(i).getbEquals().size() != 0) {
@@ -496,17 +512,23 @@ public class Main {
 		return temp;
 	}
 
+
+	//heuristic for the least constraining value.
+	//returns the index of the item with the least amount of constraints
 	private static int leastConstrainingValue() {
 		int counter;
 		int temp = 0;
 		int max = 10;
+
+		//for loop iterates through all of the items and checks all of the constraints on the items
+		//and sums them up and returns the item with the least amount of constraints
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			if (listOfItems.get(i).getbEquals() != null) {
-				counter++;
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+				counter+=listOfItems.get(i).getbEquals().size();
 			}
-			if (listOfItems.get(i).getbNotEquals() != null) {
-				counter++;
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				counter+=listOfItems.get(i).getbNotEquals().size();
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
@@ -522,24 +544,7 @@ public class Main {
 	}
 
 
-
-
-
-
-
-	private static int getHighestWeight() {
-		int temp = 0;
-		int max = 0;
-		for (int i = 0; i< listOfItems.size(); i++){
-			if (listOfItems.get(i).getWeight() >= max) {
-				temp = i;
-				max = listOfItems.get(i).getWeight();
-			}
-		}
-		return temp;
-	}
-
-
+	//returns the index of where the specified item is in the bag
 	static public int getBagIndex(String character){
 
 		for(int i = 0; i <listOfBags.size();i++){
@@ -550,7 +555,7 @@ public class Main {
 		return -1;
 
 	}
-
+	//checks to see if the item has already been seen and assigned
 	static public boolean itemSeenForBSim(Item i) {
 		if (i.bSim != null) {
 			return true;
@@ -609,10 +614,10 @@ public class Main {
 		System.out.println("Before "+itemList.size());
 		if(!copy.isEmpty()){
 
-		//tempItem = copy.remove(minRemValue(copy));
-		//tempItem = copy.remove(degreeHeuristic(copy));
-		//tempItem = copy.remove(leastConstrainingValue(copy));
-		tempItem = copy.remove(MRVANDDEGREE(copy));
+			//tempItem = copy.remove(minRemValue(copy));
+			//tempItem = copy.remove(degreeHeuristic(copy));
+			//tempItem = copy.remove(leastConstrainingValue(copy));
+			tempItem = copy.remove(MRVANDDEGREE(copy));
 		} else {
 			return false;
 		}

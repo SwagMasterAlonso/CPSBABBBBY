@@ -4,19 +4,25 @@ import java.util.List;
 /**
 Alonso, jameschow
 */
+
+//class to hold unary inclusive
 public class UnaryInclusive {
-	Item itemObj;
-	List<Bag> validDomain = new ArrayList<Bag>();
+	Item itemObj; //item object to map constraint to
+	List<Bag> validDomain = new ArrayList<Bag>(); //array list to hold the valid domain
+	
+	
+	//constructor for unary inclusive
 	public UnaryInclusive(Item item){
 		this.itemObj = item;
 	}
 
 
+	//function checks the constraints for the bag
 	public Boolean checkConstraint(Bag assignment){
 		
 		System.out.println("Valid Domain is: "+ this.validDomain);
 		
-		
+		//if the valid domain constains the assignment, then return true
 		if(this.validDomain.contains(assignment)) {
 			return true;
 		} else {
@@ -25,6 +31,8 @@ public class UnaryInclusive {
 		
 	}
 
+	
+	//various getters and setters for variable names
 	public Item getItemObj() {
 		return itemObj;
 	}

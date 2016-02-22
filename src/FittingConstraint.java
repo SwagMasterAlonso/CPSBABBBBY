@@ -1,51 +1,46 @@
+//Authors alonso martines and yychow
+
 
 public class FittingConstraint {
-	Bag bagObj;
+	Bag bagObj; //bag object for our class to map the constraint to
+
+	//constructor for the fitting constraint
 	public FittingConstraint(Bag bag) {
 		this.bagObj = bag;
 	}
 
-	public boolean checkConstraint() {
-		int sum = 0;
-		Boolean isWeightValid = false;
-		Boolean isFitValid = false;
 
+	//checks the constraints.
+	public boolean checkConstraint() {
+		int sum = 0; //variable to hold the sum of all the weight
+		Boolean isWeightValid = false; //boolean to determine if the weight is valid 
+		Boolean isFitValid = false; //boolean to determine if the fit is valid 
+
+
+		//if the bag is within the given size limits, then set the fit valid to true
 		if(this.bagObj.listOfItems.size() >= this.bagObj.getMin() && this.bagObj.listOfItems.size() <= this.bagObj.getMax()) {
 			isFitValid = true;
 		} else {
 			isFitValid = false;
 		}
-		
-		
-		//System.out.println("James code returned " + isValid );
-		 
-		
+
+
+
+
+
+		//for all of the items in the bag, sum up the weights
 		for (Item i: this.bagObj.getListOfItems()) {
 			sum += i.getWeight();
-			//System.out.println("In bag " + this.bagObj.name + " has " + i);
 		}
-		
-		
-		
-		System.out.println("Sum is: " + sum + " Bag Weight is: "+Math.floor(this.bagObj.weight) * .9);
-		if(sum> Math.floor(this.bagObj.weight*.9)){
-			isWeightValid = true;
-		} else {
-			isWeightValid = false;
-		}
-		
-		
+
+		//if the sum is greater than the capacity, return false, otherwise true
 		if (sum > this.bagObj.weight) {
 			isWeightValid = false;
 		} else {
 			isWeightValid = true;
 		}
-		
-		//System.out.println("James code 2 returned " + isValid );
 
-		
-		System.out.println("Is Weight Valid: " + isWeightValid + "    Is Fit Valid: "+isFitValid );
-		System.out.println("Bag Size is: " + bagObj.getListOfItems().size());
+		//if the weight is valid and the fit is valid, then the constraints all passed
 		if(isWeightValid&&isFitValid){
 			return true;
 		} else {
