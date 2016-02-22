@@ -26,7 +26,7 @@ public class BinaryEquals {
 
 
 		if(this.itemObj1.getAssignment() == null || this.itemObj2.getAssignment() == null){
-			/***/
+			/**Returns true if one item has not assignment yet.*/
 			System.out.println("Null setting true");
 			return true;
 		}
@@ -38,12 +38,18 @@ public class BinaryEquals {
 
 	}
 
+	/**
+	 * To String method for debug purposes.
+	 */
 	public String toString(){
 		return this.itemObj1 + " " + this.itemObj2;
 	}
+
+	/**Getter for the item object.*/
 	public Item getItemObj1() {
 		return itemObj1;
 	}
+	/**Getter for the item object.*/
 	public Item getItemObj2() {
 		return itemObj2;
 	}
