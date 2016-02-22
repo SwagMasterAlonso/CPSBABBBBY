@@ -4,7 +4,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Main {
 
@@ -39,10 +38,12 @@ public class Main {
 		backTrack(listOfBags,listOfItems);
 		System.out.println("Count is: " + count);
 
+
+		//backTrack(listOfBags,listOfItems);
+		//forwardChecking(listOfBags, listOfItems, listOfBags);
+
+
 	}
-
-
-
 
 	static void parseData(String fileName){
 
@@ -593,6 +594,8 @@ public class Main {
 		boolean isDone = false;
 		boolean result = false;
 		List<Item> copy = new ArrayList<Item>();
+		List<Item> tempEdges = null;
+		List<Bag> temp2Results = null;
 		List<Bag> domainPrime;
 		for(Item i: itemList){
 			copy.add(i);
@@ -623,8 +626,18 @@ public class Main {
 		}
 		/*Finishing the check for if assignment is complete*/
 
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println(itemList);
+		System.out.println("Before "+itemList.size());
 		tempItem = copy.remove(0);
-		for(Bag c: assignment){
+		System.out.println("Removing "+ tempItem);
+		for(Bag c: domain){
 
 			if(!c.getListOfItems().contains(tempItem)){
 				c.getListOfItems().add(tempItem);
@@ -632,29 +645,82 @@ public class Main {
 			} else {
 				continue;
 			}
+			//saving the domain
+			domainPrime = new ArrayList<Bag>(domain);
 			if(c.fc.checkConstraint()){
 				System.out.println("Passed fitting constraints.");
 				for(int i = 0; i < c.getListOfItems().size();i++){
 					System.out.println("Starting for");
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
-
-						//saving the domain
-						domainPrime = new ArrayList<Bag>(domain);
-
-
-						System.out.println("Doing backtrack again");
+						System.out.println("Doing forward checking again");
 						System.out.println("Constraints all pass");
-						System.out.println(c.name+ " "+c.getListOfItems());
-						System.out.println("Starting Backtrack");
-						result = forwardChecking(assignment,copy, domainPrime);
-						System.out.println("Assignment is Successful");
-						if(result != false){
-							System.out.println("Current Assignment is: " + assignment);
-							return true;
+						tempEdges = new ArrayList<Item>();
+						/*Going through all edges of unassigned variables.*/
+						if (tempItem.getbEquals().size() != 0 || tempItem.getbNotEquals().size() != 0|| tempItem.getbSim() != null) {
+							for (BinaryEquals beq: tempItem.getbEquals()) {
+								tempEdges.add(beq.getItemObj2());
+							}
+							for (BinaryNotEquals bneq: tempItem.getbNotEquals()) {
+								tempEdges.add(bneq.getItemObj2());
+							}
 
+							if (tempItem.getbSim() != null) {
+								tempEdges.add(tempItem.getbSim().getItemObj2());
+							}
+						} else {
+							for (Item nextItem: copy) {
+								if (!nextItem.equals(tempItem)){
+									tempEdges.add(nextItem);
+								}
+							}
 						}
 
-						System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
+						temp2Results = new ArrayList<Bag>();
+						for (Item y: tempEdges) {
+							if (y.getAssignment() == null) {
+								for (Bag b: domainPrime) {
+									if(!b.getListOfItems().contains(y)){
+										b.getListOfItems().add(y);
+										y.setAssignment(b);
+									} else {
+										continue;
+									}
+									if(b.fc.checkConstraint()){
+										System.out.println("Passed fitting constraints.");
+										for(int counter = 0; counter < b.getListOfItems().size();counter++){
+
+											if(b.getListOfItems().get(counter).superXXCheckAllConstraintsXXsuper()){
+												System.out.println("Y=y is passing all constraints.");
+												if (!temp2Results.contains(b)){
+													temp2Results.add(b);
+												}
+												b.getListOfItems().remove(y);
+												y.setAssignment(null);
+											} else {
+												b.getListOfItems().remove(y);
+												y.setAssignment(null);
+											}
+										}
+									} else {
+										b.getListOfItems().remove(y);
+										y.setAssignment(null);
+									}
+								}
+							} else {
+								continue;
+							}
+						}
+						if (!temp2Results.isEmpty() || copy.isEmpty()) {
+							result = forwardChecking(assignment,copy, temp2Results);
+							System.out.println("Assignment is Successful");
+							if(result != false){
+								System.out.println("Current Assignment is: " + assignment);
+								return true;
+
+							}
+						}
+
+						System.out.println("FAILED TO RETURN TRUE AFTER Forward");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);

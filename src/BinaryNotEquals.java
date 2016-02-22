@@ -10,7 +10,7 @@ public class BinaryNotEquals {
 	public Boolean checkConstraint(){
 		System.out.println(itemObj1.name + " " +this.itemObj1.getAssignment() + " XX "+itemObj2.name + " " +this.itemObj2.getAssignment() );
 		if(this.itemObj1.getAssignment() != this.itemObj2.getAssignment()) {
-			
+
 			System.out.println("ASSIGNMENT FOR BINARY NOT EQUALS IS VALID");
 			return true;
 		} else {
@@ -18,13 +18,25 @@ public class BinaryNotEquals {
 		}
 	}
 
-	
+
+	public Bag getBag() {
+		return bag;
+	}
+
+	public Item getItemObj1() {
+		return itemObj1;
+	}
+
+	public Item getItemObj2() {
+		return itemObj2;
+	}
+
 	public String toString(){
 		return this.itemObj1.getName() + " " + this.itemObj2.getName();
 	}
-	
-	
-	
+
+
+
 	public Boolean checkBagConstraint(){
 
 		if (this.bag.getListOfItems().contains(this.itemObj1) && this.bag.listOfItems.contains(itemObj2)){
@@ -32,7 +44,7 @@ public class BinaryNotEquals {
 		} else {
 			return true;
 		}
-		
-		
+
+
 	}
 }
