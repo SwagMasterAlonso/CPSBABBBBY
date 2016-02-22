@@ -753,7 +753,7 @@ public class Main {
 			}
 			System.out.println("");
 			System.out.println("Number of Items: " +finalBag.get(i).getListOfItems().size());
-			System.out.println("Total Weight: "+finalBag.get(i).totalWeight());
+			System.out.println("Total Weight: "+finalBag.get(i).totalWeight()+"/"+finalBag.get(i).weight);
 			System.out.println("Wasted Capacity: "+(finalBag.get(i).weight-finalBag.get(i).totalWeight()));
 
 			System.out.println("");
