@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,10 +16,26 @@ public class BinarySimultaneous {
 		this.validBagsFor2 = new CopyOnWriteArrayList<Bag>();
 	}
 
+	public Item getItemObj1() {
+		return itemObj1;
+	}
+
+	public Item getItemObj2() {
+		return itemObj2;
+	}
+
+	public List<Bag> getValidBagsFor1() {
+		return validBagsFor1;
+	}
+
+	public List<Bag> getValidBagsFor2() {
+		return validBagsFor2;
+	}
+
 	public Boolean checkConstraint(){
 		if (this.validBagsFor1.size() == 1 && this.validBagsFor2.size() == 1) {
 			if(this.itemObj1.getAssignment() == this.validBagsFor1.get(0)) {
-				
+
 				System.out.println("Returning True 1");
 				return true;
 			} else {
