@@ -21,11 +21,9 @@ public class BinaryNotEquals {
 	 * @return a boolean value.
 	 */
 	public Boolean checkConstraint(){
-		System.out.println(itemObj1.name + " " +this.itemObj1.getAssignment() + " XX "+itemObj2.name + " " +this.itemObj2.getAssignment() );
 		if(this.itemObj1.getAssignment() != this.itemObj2.getAssignment()) {
 			/**Makes sure that the assignment of the first item is not the same as the
 			 * assignment of the second item.*/
-			System.out.println("ASSIGNMENT FOR BINARY NOT EQUALS IS VALID");
 			return true;
 		} else {
 			return false;

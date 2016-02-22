@@ -158,7 +158,6 @@ public class Item {
 		Boolean isValid = true;
 
 
-		System.out.println("Checking All Constraints");
 		if(this.uExclusive !=null){
 			isValid = this.uExclusive.checkConstraint(assignment);
 			if(isValid == false){
@@ -199,7 +198,6 @@ public class Item {
 			for(Item i:this.assignment.getListOfItems()){
 				for(BinaryNotEquals bneq:bNotEquals){
 
-					System.out.println("This bNotEquals is: "+bNotEquals);
 
 					isValid = bneq.checkConstraint();
 

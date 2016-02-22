@@ -47,7 +47,7 @@ public class Bag {
 	/**To string method for debugging purposes.*/
 	public String toString(){
 		//return this.name+" with capacity "+this.weight+" from "+this.fittingMin+" to max "+this.fittingMax;
-		return this.name + " " +listOfItems;
+		return this.name;
 
 	}
 
@@ -74,6 +74,16 @@ public class Bag {
 	/**Getter for the list of assignments.*/
 	public List<Item> getListOfItems() {
 		return listOfItems;
+	}
+	
+	public int totalWeight(){
+		int sum = 0;
+		
+		for(Item i: this.listOfItems){
+			sum+=i.weight;
+		}
+		
+		return sum;
 	}
 
 }

@@ -33,7 +33,7 @@ public class Main {
 
 			fileName = inputString;
 		} else {
-			System.out.println("Not enough input arguments");
+			//System.out.println("Not enough input arguments");
 			System.exit(0);
 		}
 		/**Parses the text file for reading in variables, bags, and unary and binary constraints.*/
@@ -44,8 +44,13 @@ public class Main {
 		 * and comment out the other algoritm.
 		 */
 		backTrack(listOfBags,listOfItems);
+		
+		
+		
+
+		showOutput();
 		//forwardChecking(listOfBags, listOfItems, listOfBags);
-		System.out.println("Count is: " + count);
+	
 
 	}
 
@@ -70,10 +75,10 @@ public class Main {
 				switch(counter) {
 				case 0:
 					if (line.contains("#####") && line.contains("variables")) {
-						System.out.println("Beginning header");
+						//System.out.println("Beginning header");
 						break;
 					} else if (line.contains("#####") && line.contains("values")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -82,13 +87,13 @@ public class Main {
 						weight = Integer.parseInt(fields[1]);
 						Item itemObject = new Item(item,weight);
 						listOfItems.add(itemObject);
-						System.out.println("item "+item+" weighs "+weight);
+						//System.out.println("item "+item+" weighs "+weight);
 						continue;
 					}
 				case 1:
 					if (line.contains("#####") && line.contains("fitting limits")) {
 
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
@@ -97,17 +102,17 @@ public class Main {
 						weight = Integer.parseInt(fields[1]);
 						Bag bagObject = new Bag(bag,weight);
 						listOfBags.add(bagObject);
-						System.out.println("bag "+bag+" can hold "+weight);
+						//System.out.println("bag "+bag+" can hold "+weight);
 						continue;
 					}
 				case 2:
 					if (line.contains("#####") && line.contains("unary inclusive")) {
 
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading fitting limits info.");
+						//System.out.println("Reading fitting limits info.");
 						String[] fields = line.split(" ");
 						int min = Integer.parseInt(fields[0]);
 						int max = Integer.parseInt(fields[1]);
@@ -116,18 +121,18 @@ public class Main {
 							b.setMax(max);
 						}
 						for (Bag b: listOfBags) {
-							System.out.println(b);
+							//System.out.println(b);
 						}
 						continue;
 					}
 				case 3:
 					UnaryInclusive uin = null;
 					if (line.contains("#####") && line.contains("unary exclusive")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading unary inclusive info.");
+						//System.out.println("Reading unary inclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
 							if (i.getName().equals(fields[0])) {
@@ -138,17 +143,17 @@ public class Main {
 								i.setuInclusive(uin);
 							}
 						}
-						System.out.println("Read in "+line);
+						//System.out.println("Read in "+line);
 						continue;
 					}
 				case 4:
 					UnaryExclusive uex = null;
 					if (line.contains("#####") && line.contains("binary equals")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading unary exclusive info.");
+						//System.out.println("Reading unary exclusive info.");
 						String[] fields = line.split(" ");
 						for (Item i: listOfItems) {
 							if (i.getName().equals(fields[0])) {
@@ -160,17 +165,17 @@ public class Main {
 							}
 
 						}
-						System.out.println("Read in "+line);
+						//System.out.println("Read in "+line);
 						continue;
 					}
 				case 5:
 					BinaryEquals beq = null;
 					if (line.contains("#####") && line.contains("binary not")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading binary equals info.");
+						//System.out.println("Reading binary equals info.");
 						String[] fields = line.split(" ");
 						Item item1 = null, item2 = null;
 
@@ -182,26 +187,26 @@ public class Main {
 							}
 						}
 
-						System.out.println("Item 1 is: " + item1 + " Item 2 is : " +item2);
+						//System.out.println("Item 1 is: " + item1 + " Item 2 is : " +item2);
 						beq = new BinaryEquals(item1, item2);
 						item1.getbEquals().add(beq);
 
-						System.out.println("Item1  is" + item1.bEquals);
+						//System.out.println("Item1  is" + item1.bEquals);
 						BinaryEquals beq2 = new BinaryEquals(item2, item1);
 
 						item2.getbEquals().add(beq2);
-						System.out.println("Item2  is" + item2.bEquals);
+						//System.out.println("Item2  is" + item2.bEquals);
 
 						continue;
 					}
 				case 6:
 					BinaryNotEquals bNotEq = null;
 					if (line.contains("#####") && line.contains("binary simultaneous")) {
-						System.out.println("entering section "+line);
+						//System.out.println("entering section "+line);
 						counter++;
 						break;
 					} else {
-						System.out.println("Reading binary not equals info.");
+						//System.out.println("Reading binary not equals info.");
 						String[] fields = line.split(" ");
 						Item item1 = null, item2 = null;
 
@@ -213,18 +218,18 @@ public class Main {
 							}
 						}
 
-						System.out.println(item1 + " "+item2);
+						//System.out.println(item1 + " "+item2);
 						bNotEq = new BinaryNotEquals(item1, item2);
 						item1.getbNotEquals().add(bNotEq);
 						bNotEq = new BinaryNotEquals(item2, item1);
 						item2.getbNotEquals().add(bNotEq);
-						System.out.println("List is: "+ item1.getbNotEquals());
-						System.out.println(item1.getbNotEquals() + " YY "+item2.getbNotEquals());
+						//System.out.println("List is: "+ item1.getbNotEquals());
+						//System.out.println(item1.getbNotEquals() + " YY "+item2.getbNotEquals());
 						continue;
 					}
 				case 7:
 					BinarySimultaneous bsim = null;
-					System.out.println("Reading binary simultaneous info.");
+					//System.out.println("Reading binary simultaneous info.");
 					String[] fields = line.split(" ");
 					Item item1 = null, item2 = null;
 
@@ -255,7 +260,7 @@ public class Main {
 					}
 					continue;
 				default:
-					System.out.println("Already reached end of file");
+					//System.out.println("Already reached end of file");
 				}
 			}
 		}
@@ -292,7 +297,7 @@ public class Main {
 		/**Preliminary answer checking that only checks constraints if all
 		 * variables have been assigned.*/
 		if(itemList.isEmpty()){
-			System.out.println("IsEmpty");
+			//System.out.println("IsEmpty");
 			/**Iterates through the baglist.*/
 			for(Bag b:bagList){
 				if(b.fc.checkConstraint()){
@@ -313,23 +318,23 @@ public class Main {
 		/**If the boolean isDone is true, then assign the final solution and output.*/
 		if(isDone){
 			finalBag = bagList;
-			System.out.println(finalBag);
-			System.out.println("Finished with assignment, returning");
+			//System.out.println(finalBag);
+			//System.out.println("Finished with assignment, returning");
 			return true;
 		}
 
 
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
 
 
-		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println(itemList);
-		System.out.println("Before "+itemList.size());
+		//System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println(itemList);
+		//System.out.println("Before "+itemList.size());
 
 		/**Only removes from non-empty item list. If empty, return failure.*/
 		if(!copy.isEmpty()){
@@ -341,15 +346,15 @@ public class Main {
 		} else {
 			return false;
 		}
-		System.out.println("After " + itemList.size());
-		System.out.println("Removing " + tempItem);
+		//System.out.println("After " + itemList.size());
+		//System.out.println("Removing " + tempItem);
 
 		/**Iterate through the variable domain.*/
 		for(Bag c: bagList){
 
-			System.out.println("In bag " + c);
-			System.out.println("1");
-			System.out.println("2");
+			//System.out.println("In bag " + c);
+			//System.out.println("1");
+			//System.out.println("2");
 
 			/***/
 			if(!c.getListOfItems().contains(tempItem)){
@@ -362,59 +367,59 @@ public class Main {
 			/**Checking fitting constraint.*/
 			if(c.fc.checkConstraint()){
 
-				System.out.println("Passed fitting");
+				//System.out.println("Passed fitting");
 				for(int i = 0; i < c.getListOfItems().size();i++){
-					System.out.println("Starting for");
+					//System.out.println("Starting for");
 
 					/**Checks the constraints of each variable within the bag c.*/
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
-						System.out.println("Doing backtrack again");
-						System.out.println("Constraints all pass");
+						//System.out.println("Doing backtrack again");
+						//System.out.println("Constraints all pass");
 
 
-						System.out.println(c.name+ " "+c.getListOfItems());
-						System.out.println("Starting Backtrack");
+						//System.out.println(c.name+ " "+c.getListOfItems());
+						//System.out.println("Starting Backtrack");
 						result = backTrack(bagList,copy);
-						System.out.println("Is Successful");
+						//System.out.println("Is Successful");
 						/**Only is a result is found does it return true.*/
 						if(result != false){
-							System.out.println("Current Assignment is: " + bagList);
+							//System.out.println("Current Assignment is: " + bagList);
 							return true;
 
 						}
-						System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
+						//System.out.println("FAILED TO RETURN TRUE AFTER BACKTRACK");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
-						System.out.println("Current Assignment is: " + bagList);
+						//System.out.println("Current Assignment is: " + bagList);
 
 					} else {
 						/**Did not pass the fitting constraint.*/
-						System.out.println("Didn't pass all constraints");
+						//System.out.println("Didn't pass all constraints");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
-						System.out.println("Current Assignment is: " + bagList);
+						//System.out.println("Current Assignment is: " + bagList);
 
 					}
 
 
 				}
 			} else {
-				System.out.println("DIDNT WORK AT ALL");
+				//System.out.println("DIDNT WORK AT ALL");
 
-				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
+				//System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
 
 				c.getListOfItems().remove(tempItem);
 				tempItem.setAssignment(null);
-				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
-				System.out.println("Before Add ItemList: " + itemList);
-				System.out.println("After Add ItemList: " + itemList);
+				//System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
+				//System.out.println("Before Add ItemList: " + itemList);
+				//System.out.println("After Add ItemList: " + itemList);
 			}
 
 		}
 		/**Sets the failed baglist*/
 		finalBag = bagList;
-		System.out.println("Failing");
+		//System.out.println("Failing");
 		return false;
 	}
 
@@ -453,11 +458,11 @@ public class Main {
 			}
 			if (listOfItems.get(i).getbEquals().size() != 0) {
 
-				System.out.println("Increasing from bEquals");
+				//System.out.println("Increasing from bEquals");
 				counter+=listOfItems.get(i).getbEquals().size();
 			}
 			if (listOfItems.get(i).getbNotEquals().size() != 0) {
-				System.out.println("Increasing from bNotEquals");
+				//System.out.println("Increasing from bNotEquals");
 
 				counter+=listOfItems.get(i).getbNotEquals().size();
 			}
@@ -466,7 +471,7 @@ public class Main {
 			}
 
 
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+			//System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 
 			if (counter >= max) {
 				max = counter;
@@ -490,11 +495,11 @@ public class Main {
 			counter = 0;
 			if (listOfItems.get(i).getbEquals().size() != 0) {
 
-				System.out.println("Increasing from bEquals");
+				//System.out.println("Increasing from bEquals");
 				counter+=listOfItems.get(i).getbEquals().size();
 			}
 			if (listOfItems.get(i).getbNotEquals().size() != 0) {
-				System.out.println("Increasing from bNotEquals");
+				//System.out.println("Increasing from bNotEquals");
 
 				counter+=listOfItems.get(i).getbNotEquals().size();
 			}
@@ -502,7 +507,7 @@ public class Main {
 				counter++;
 			}
 
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+			//System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 
 			if (counter >= max) {
 				max = counter;
@@ -534,7 +539,7 @@ public class Main {
 				counter++;
 			}
 
-			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+			//System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 			if (counter <= max) {
 				max = counter;
 				temp = i;
@@ -579,7 +584,7 @@ public class Main {
 		}
 		/**Begin check for complete assignment.*/
 		if(itemList.isEmpty()){
-			System.out.println("IsEmpty");
+			//System.out.println("IsEmpty");
 			for(Bag b:assignment){
 				if(b.fc.checkConstraint()){
 					for(int i = 0; i < b.getListOfItems().size();i++){
@@ -597,21 +602,21 @@ public class Main {
 
 		if(isDone){
 			finalBag = assignment;
-			System.out.println(finalBag);
-			System.out.println("Finished with assignment, returning");
+			//System.out.println(finalBag);
+			//System.out.println("Finished with assignment, returning");
 			return true;
 		}
 		/*Finishing the check for if assignment is complete*/
 
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
-		System.out.println("");
-		System.out.println("");
-		System.out.println("");
-		System.out.println(itemList);
-		System.out.println("Before "+itemList.size());
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("XXXXXXXXXX  STARTING AGAIN XXXXXXXXXX");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println("");
+		//System.out.println(itemList);
+		//System.out.println("Before "+itemList.size());
 		if(!copy.isEmpty()){
 
 			//tempItem = copy.remove(minRemValue(copy));
@@ -633,12 +638,12 @@ public class Main {
 			//saving the domain
 			domainPrime = new ArrayList<Bag>(domain);
 			if(c.fc.checkConstraint()){
-				System.out.println("Passed fitting constraints.");
+				//System.out.println("Passed fitting constraints.");
 				for(int i = 0; i < c.getListOfItems().size();i++){
-					System.out.println("Starting for");
+					//System.out.println("Starting for");
 					if(c.getListOfItems().get(i).superXXCheckAllConstraintsXXsuper()){
-						System.out.println("Doing forward checking again");
-						System.out.println("Constraints all pass");
+						//System.out.println("Doing forward checking again");
+						//System.out.println("Constraints all pass");
 						tempEdges = new ArrayList<Item>();
 						/*Going through all edges of unassigned variables.*/
 						if (tempItem.getbEquals().size() != 0 || tempItem.getbNotEquals().size() != 0|| tempItem.getbSim() != null) {
@@ -671,11 +676,11 @@ public class Main {
 										continue;
 									}
 									if(b.fc.checkConstraint()){
-										System.out.println("Passed fitting constraints.");
+										//System.out.println("Passed fitting constraints.");
 										for(int counter = 0; counter < b.getListOfItems().size();counter++){
 
 											if(b.getListOfItems().get(counter).superXXCheckAllConstraintsXXsuper()){
-												System.out.println("Y=y is passing all constraints.");
+												//System.out.println("Y=y is passing all constraints.");
 												if (!temp2Results.contains(b)){
 													temp2Results.add(b);
 												}
@@ -697,45 +702,63 @@ public class Main {
 						}
 						if (!temp2Results.isEmpty() || copy.isEmpty()) {
 							result = forwardChecking(assignment,copy, temp2Results);
-							System.out.println("Assignment is Successful");
+							//System.out.println("Assignment is Successful");
 							if(result != false){
-								System.out.println("Current Assignment is: " + assignment);
+								//System.out.println("Current Assignment is: " + assignment);
 								return true;
 
 							}
 						}
 
-						System.out.println("FAILED TO RETURN TRUE AFTER Forward");
+						//System.out.println("FAILED TO RETURN TRUE AFTER Forward");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 						c.fc = new FittingConstraint(c);
 					} else {
-						System.out.println("assignment did not pass all constraints");
+						//System.out.println("assignment did not pass all constraints");
 						c.getListOfItems().remove(tempItem);
 						tempItem.setAssignment(null);
 					}
 				}
 			} else {
-				System.out.println("Assignment DID NOT SATISFY AT ALL");
+				//System.out.println("Assignment DID NOT SATISFY AT ALL");
 
-				System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
+				//System.out.println("Before Remove: "+ c.name+" " + c.getListOfItems());
 				c.getListOfItems().remove(tempItem);
 				tempItem.setAssignment(null);
 
-				System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
+				//System.out.println("After Remove: " + c.name+" "+ c.getListOfItems());
 
-				System.out.println("Before Add ItemList: " + itemList);
-				System.out.println("After Add ItemList: " + itemList);
+				//System.out.println("Before Add ItemList: " + itemList);
+				//System.out.println("After Add ItemList: " + itemList);
 
 			}
 
 
 		}
 		finalBag = assignment;
-		System.out.println(finalBag);
-		System.out.println("Failing");
+		//System.out.println(finalBag);
+		//System.out.println("Failing");
 		return false;
 	}
 
+	
+	public static void showOutput(){
+		for(int i = 0; i < finalBag.size();i++){
+			System.out.print(finalBag.get(i));
+			
+			for(int j = 0; j < finalBag.get(i).getListOfItems().size();j++){
+				System.out.print(" "+finalBag.get(i).getListOfItems().get(j));
+			
+			}
+			System.out.println("");
+			System.out.println("Number of Items: " +finalBag.get(i).getListOfItems().size());
+			System.out.println("Total Weight: "+finalBag.get(i).totalWeight());
+			System.out.println("Wasted Capacity: "+(finalBag.get(i).weight-finalBag.get(i).totalWeight()));
+
+			System.out.println("");
+
+		}
+	}
 
 }

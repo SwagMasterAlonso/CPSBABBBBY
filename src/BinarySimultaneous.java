@@ -57,10 +57,8 @@ public class BinarySimultaneous {
 			/**Condition for when the domains of each object are the same.*/
 			if(this.itemObj1.getAssignment() == this.validBagsFor1.get(0)) {
 
-				System.out.println("Returning True 1");
 				return true;
 			} else {
-				System.out.println("Returning False 1");
 
 				return false;
 			}
@@ -68,22 +66,18 @@ public class BinarySimultaneous {
 			if (this.validBagsFor1.size() > 1) {
 				/**Condition for when the valid bag list for item1 is more than 1*/
 				if (this.itemObj2.getAssignment() != this.validBagsFor2.get(0)) {
-					System.out.println("Returning True 2");
 
 					return true;
 				} else {
-					System.out.println("Returning False 2");
 
 					return false;
 				}
 			} else  {
 				/**Condition for when the valid bag list for item2 is more than 1*/
 				if (this.itemObj1.getAssignment() != this.validBagsFor1.get(0)) {
-					System.out.println("Returning True 3");
 
 					return true;
 				} else {
-					System.out.println("Returning False 3");
 
 					return false;
 				}

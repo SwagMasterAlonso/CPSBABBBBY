@@ -20,7 +20,6 @@ public class UnaryInclusive {
 	//function checks the constraints for the bag
 	public Boolean checkConstraint(Bag assignment){
 		
-		System.out.println("Valid Domain is: "+ this.validDomain);
 		
 		//if the valid domain constains the assignment, then return true
 		if(this.validDomain.contains(assignment)) {
