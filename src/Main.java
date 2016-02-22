@@ -15,6 +15,7 @@ public class Main {
 
 	static List<Bag> finalBag = null;
 
+	static int count = 0;
 	public static void main(String[] args) {
 
 
@@ -35,8 +36,9 @@ public class Main {
 
 
 		parseData(fileName);
-
 		backTrack(listOfBags,listOfItems);
+		System.out.println("Count is: " + count);
+
 	}
 
 
@@ -164,6 +166,9 @@ public class Main {
 						continue;
 					}
 				case 5:
+					for(Item i: listOfItems){
+						i.createDomain();
+					}
 					BinaryEquals beq = null;
 					if (line.contains("#####") && line.contains("binary not")) {
 						System.out.println("entering section "+line);
@@ -275,7 +280,7 @@ public class Main {
 
 
 	static Boolean backTrack(List<Bag> bagList, List<Item> itemList){
-
+		count++;
 		Item tempItem;
 		boolean isDone = false;
 		boolean result = false;
@@ -324,7 +329,11 @@ public class Main {
 		System.out.println("Before "+itemList.size());
 
 		if(!copy.isEmpty()){
-		tempItem = copy.remove(0);
+		//tempItem = copy.remove(minRemValue(copy));
+		//tempItem = copy.remove(degreeHeuristic(copy));
+		//tempItem = copy.remove(leastConstrainingValue(copy));
+		tempItem = copy.remove(MRVANDDEGREE(copy));
+		//tempItem = copy.remove(0);
 		} else {
 			return false;
 		}
@@ -430,7 +439,7 @@ public class Main {
 	}
 
 
-	private static int minRemValue() {
+	private static int minRemValue(List<Item> listOfItems) {
 		int temp = 0;
 		int min = 1000;
 		for (int i = 0; i< listOfItems.size(); i++){
@@ -441,22 +450,70 @@ public class Main {
 		}
 		return temp;
 	}
-
-	private static int degreeHeuristic() {
+	
+	
+	private static int MRVANDDEGREE(List<Item> listOfItems){
 		int counter;
 		int temp = 0;
 		int max = 0;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			if (listOfItems.get(i).getbEquals() != null) {
-				counter++;
+			
+			
+			if(listOfItems.get(i).getDomain().size() != 0){
+				
+				counter+=listOfItems.get(i).getDomain().size();
+
 			}
-			if (listOfItems.get(i).getbNotEquals() != null) {
-				counter++;
+			
+			
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+				
+				System.out.println("Increasing from bEquals");
+				counter+=listOfItems.get(i).getbEquals().size();
+			}
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				System.out.println("Increasing from bNotEquals");
+
+				counter+=listOfItems.get(i).getbNotEquals().size();
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
+			
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+
+			if (counter >= max) {
+				max = counter;
+				temp = i;
+			}
+		}
+		return temp;
+	}
+	
+
+	private static int degreeHeuristic(List<Item> listOfItems) {
+		int counter;
+		int temp = 0;
+		int max = 0;
+		for (int i = 0; i< listOfItems.size(); i++){
+			counter = 0;
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+				
+				System.out.println("Increasing from bEquals");
+				counter+=listOfItems.get(i).getbEquals().size();
+			}
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				System.out.println("Increasing from bNotEquals");
+
+				counter+=listOfItems.get(i).getbNotEquals().size();
+			}
+			if (listOfItems.get(i).getbSim() != null) {
+				counter++;
+			}
+			
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
+
 			if (counter >= max) {
 				max = counter;
 				temp = i;
@@ -465,21 +522,28 @@ public class Main {
 		return temp;
 	}
 
-	private static int leastConstrainingValue() {
+	private static int leastConstrainingValue(List<Item> listOfItems) {
 		int counter;
 		int temp = 0;
 		int max = 10;
 		for (int i = 0; i< listOfItems.size(); i++){
 			counter = 0;
-			if (listOfItems.get(i).getbEquals() != null) {
-				counter++;
+			if (listOfItems.get(i).getbEquals().size() != 0) {
+				counter+=listOfItems.get(i).getbEquals().size();
+				System.out.println("Increasing from bEquals");
+
 			}
-			if (listOfItems.get(i).getbNotEquals() != null) {
-				counter++;
+			if (listOfItems.get(i).getbNotEquals().size() != 0) {
+				counter+=listOfItems.get(i).getbNotEquals().size();
+				System.out.println("Increasing from bNotEquals");
+
 			}
 			if (listOfItems.get(i).getbSim() != null) {
 				counter++;
 			}
+			
+			
+			System.out.println("Counter Var for " + listOfItems.get(i).name + " is : " +counter);
 			if (counter <= max) {
 				max = counter;
 				temp = i;
